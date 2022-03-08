@@ -24,12 +24,12 @@ const routes: Routes = [
     path:"",
     component:FullComponent,
     children: [
-      {path:"", redirectTo:"/home", pathMatch:"full"},
+      // {path:"", redirectTo:"/home", pathMatch:"full"},
       {path:"home", component:ProductComponent},
       {path:"table", component:GridListComponent},
       {path:"progress-snipper", component:ExpansionComponent},
-      {path:"alerts", component:AlertsComponent},
-      {path:"forms", component:FormsComponent},
+      // {path:"alerts", component:AlertsComponent},
+      // {path:"forms", component:FormsComponent},
       // {path:"grid-list", component:GridListComponent},
       // {path:"menu", component:MenuComponent},
       // {path:"tabs", component:TabsComponent},
@@ -46,8 +46,8 @@ const routes: Routes = [
     ]
   },
 
-  {path:"", redirectTo:"/home", pathMatch:"full"},
-  {path:"**", redirectTo:"/home", pathMatch:"full"},
+  // {path:"", redirectTo:"/home", pathMatch:"full"},
+  // {path:"**", redirectTo:"/home", pathMatch:"full"},
 ];
 
 @NgModule({

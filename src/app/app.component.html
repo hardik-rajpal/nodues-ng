@@ -1,1 +1,6 @@
-<router-outlet></router-outlet>
+<div class="loginpage" *ngIf="!loggedIn">
+    <button mat-raised-button (click)="login()" style="font-size: 25px;padding: 10px;border-radius: 50px; background-color: blue;color: white;">
+        Log In with SSO
+    </button>
+</div>
+<router-outlet *ngIf="loggedIn"></router-outlet>
