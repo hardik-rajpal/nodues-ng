@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./grid-list.component.scss']
 })
 export class GridListComponent implements OnInit {
-
+  docGroups:any = [
+    {'title':'SMA Receipts',docs:['Spring Sem 2022', 'Autumn Sem 2021','Autumn Sem 2019']},
+    {'title':'Lab Repairs',docs:['Broken Beaker - 2019', 'Broken Beaker - 2020','Broken Beaker - 2021', 'Broken Beaker Cupboard - 2022']}
+  ]
   constructor() { }
 
   ngOnInit(): void {

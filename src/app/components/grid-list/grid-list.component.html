@@ -1,34 +1,21 @@
 <!-- ============================================================== -->
-<!-- Fixed height Card Grid-->
-<!-- ============================================================== -->
-<div fxLayout="row">
-  <div fxFlex="100%">
-    <mat-card>
-      <mat-card-content>
-        <h4 class="mb-32">Fixed height grid-list</h4>
-
-        <mat-grid-list cols="4" rowHeight="100px">
-          <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"
-            [style.background]="tile.color">
-            {{tile.text}}
-          </mat-grid-tile>
-        </mat-grid-list>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
-<!-- ============================================================== -->
 <!-- Basic Card Grid-->
 <!-- ============================================================== -->
-<mat-card>
+<mat-card *ngFor="let group of docGroups">
   <mat-card-content>
-    <h4 class="mb-32">Basic grid-list</h4>
-
+    <h4 class="mb-32">{{group.title}}</h4>
     <mat-grid-list cols="2" rowHeight="2:1">
-      <mat-grid-tile>1</mat-grid-tile>
-      <mat-grid-tile>2</mat-grid-tile>
-      <mat-grid-tile>3</mat-grid-tile>
-      <mat-grid-tile>4</mat-grid-tile>
+      <mat-grid-tile *ngFor="let doc of group.docs">
+        <div class="divTileOuter">
+          <div class="divTile">
+            <p>{{doc}}</p>
+            <i-feather name="file" class="feather-base me-16"></i-feather>
+          </div>
+          <button mat-raised-button class="me-8 mb-8" color="accent">
+            Download <i-feather name="download" class="feather-base me-16"></i-feather>
+          </button>
+        </div>
+      </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>
 </mat-card>

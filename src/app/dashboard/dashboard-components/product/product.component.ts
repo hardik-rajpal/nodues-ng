@@ -1,20 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 export interface PeriodicElement {
-  id: number;
-  name: string;
-  work: string;
-  project: string;
-  priority: string;
-  badge: string;
-  budget: string;
+  department: string;
+  balance:number;
+  status: string;
+  comments:string;
 }
-
 const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1, name: 'Deep Javiya', work: 'Frontend Devloper', project: 'Flexy Angular', priority: 'Low', badge: 'badge-info', budget: '$3.9k' },
-  { id: 2, name: 'Nirav Joshi', work: 'Project Manager', project: 'Hosting Press HTML', priority: 'Medium', badge: 'badge-primary', budget: '$24.5k' },
-  { id: 3, name: 'Sunil Joshi', work: 'Web Designer', project: 'Elite Admin', priority: 'High', badge: 'badge-danger', budget: '$12.8k' },
-  { id: 4, name: 'Maruti Makwana', work: 'Backend Devloper', project: 'Material Pro', priority: 'Critical', badge: 'badge-success', budget: '$2.4k' },
+  {department: 'Hostel', status: 'Due',balance: 42, comments:'We know what you did.'},
+  {department: 'Hostel', status: 'Cleared',balance:0,comments:'None'},
+  
 ];
 
 
@@ -25,9 +20,27 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class ProductComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'assigned', 'name', 'priority', 'budget'];
+  displayedColumns: string[] = ['department', 'status', 'comments','actions'];
   dataSource = ELEMENT_DATA;
-
+  badgeMap:Function =(status:string)=> {
+    return {
+    'Due':'badge badge-danger',
+    'Cleared':'badge badge-success'
+  }[status];
+  }
+  actionsMap:Function = (status:string)=>{
+    return {
+      'Due':['Inquire','Pay'],
+      'Cleared':['Save']
+    }[status]
+  }
+  colorMap:Function = (action:string)=>{
+    return {
+      'Inquire':'primary',
+      'Pay':'accent',
+      'Save':'primary'
+    }[action]
+  }
   constructor() { }
 
   ngOnInit(): void {
