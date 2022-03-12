@@ -1,5 +1,6 @@
 export const API = {
-    LoggedInUser: 'api/login/get-user',
-    Login:'api/login{?code,redir}',
+    LoggedInUser: 'login/get-user',
+    Login:'login{?code,redir}',
     Logout:'api/logout',
+    SubmitFile:'api/records'
 }

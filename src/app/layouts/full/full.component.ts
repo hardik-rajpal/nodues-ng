@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { DataService } from 'src/app/data.service';
 
 interface sidebarMenu {
   link: string;
@@ -14,7 +15,7 @@ interface sidebarMenu {
   templateUrl: './full.component.html',
   styleUrls: ['./full.component.scss']
 })
-export class FullComponent {
+export class FullComponent implements OnInit{
 
   search: boolean = false;
 
@@ -24,7 +25,7 @@ export class FullComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver,private dataService:DataService) { }
 
   routerActive: string = "activelink";
 
@@ -115,5 +116,23 @@ export class FullComponent {
     //   menu: "Slide Toggle",
     // },
   ]
+  ngOnInit() {
+    // this.dataService.GetFillCurrentUser().subscribe(v=>{
+      // console.log(v)
+      let isAdmin = true;
+      if(isAdmin){
+        this.sidebarMenu = [
+          {
+            link: "/admin",
+            icon: "home",
+            menu: "Dashboard",
+          },
+        ]
+      }
+      else{
+
+      }
+    // })
+  }
 
 }

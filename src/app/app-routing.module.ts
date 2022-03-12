@@ -6,6 +6,7 @@ import { ChipsComponent } from './components/chips/chips.component';
 import { ExpansionComponent } from './components/expansion/expansion.component';
 import { FormsComponent } from './components/forms/forms.component';
 import { GridListComponent } from './components/grid-list/grid-list.component';
+import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ProgressSnipperComponent } from './components/progress-snipper/progress-snipper.component';
 import { ProgressComponent } from './components/progress/progress.component';
@@ -20,11 +21,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FullComponent } from './layouts/full/full.component';
 
 const routes: Routes = [
+  { path:"login",component:LoginComponent},
   {
     path:"",
     component:FullComponent,
     children: [
       // {path:"", redirectTo:"/home", pathMatch:"full"},
+      {path:"admin",component:MenuComponent},
       {path:"home", component:ProductComponent},
       {path:"table", component:GridListComponent},
       {path:"progress-snipper", component:ExpansionComponent},

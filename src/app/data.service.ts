@@ -6,7 +6,8 @@ import { environment } from 'src/environments/environment';
 import * as uriTemplates from 'uri-templates';
 const SSOHOST = environment.sso_host;
 const CLIENT_ID = environment.sso_client_id;
-const SSO_REDIR = environment.host;
+const SSO_REDIR = (environment.host+'login');
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,7 +32,7 @@ export class DataService {
     return URITemplate.fill(options);
   }
   FireGET<T>(uriTemplate: string, options: any = {}): Observable<T> {
-    return this.http.get<T>(this.FillURITemplate('http://localhost:4200/' + uriTemplate, options));
+    return this.http.get<T>(this.FillURITemplate('http://localhost:8000/' + uriTemplate, options));
   }
   GetFillCurrentUser():Observable<any>{
     return new Observable(observer=>{
@@ -49,6 +50,13 @@ export class DataService {
     observer.next(this.currentUser)
   }
   AuthenticateSSO(code:string){
-    return this.FireGET(API.Login,{code:code,redir:SSO_REDIR});
+    let redir = SSO_REDIR
+    return this.http.get(`http://localhost:8000/login?code=${code}&redir=${redir}`,);
+  }
+  sendFiles(files:any[]){
+    let uploadData = new FormData();
+    console.log(files[0].name);
+    uploadData.append('file1',files[0],files[0].name)
+    return this.http.post(API.SubmitFile+'upload',uploadData)
   }
 }

@@ -34,6 +34,12 @@ export class ProductComponent implements OnInit {
       'Cleared':['Save']
     }[status]
   }
+  inquire:Function = (element:PeriodicElement)=>null;
+  // functionMap:Function = (action:string,element:PeriodicElement)=>{
+  //   return {
+  //     'Inquire':this.inquire
+  //   }[action](element)
+  // }
   colorMap:Function = (action:string)=>{
     return {
       'Inquire':'primary',

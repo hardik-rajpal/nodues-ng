@@ -18,7 +18,9 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
 import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
 import { ButtonsComponent } from './buttons/buttons.component';
-import { TooltipsComponent } from './tooltips/tooltips.component'
+import { TooltipsComponent } from './tooltips/tooltips.component';
+import { UploadComponent } from './upload/upload.component';
+import { LoginComponent } from './login/login.component'
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { TooltipsComponent } from './tooltips/tooltips.component'
     SlideToggleComponent,
     ButtonsComponent,
     TooltipsComponent,
+    UploadComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,
