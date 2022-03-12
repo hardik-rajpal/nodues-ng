@@ -50,6 +50,9 @@ export class ProductComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if(localStorage.getItem('isAdmin')){
+      window.location.href = '/admin'
+    }
   }
 
 }

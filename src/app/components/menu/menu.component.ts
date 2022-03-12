@@ -17,6 +17,9 @@ export class MenuComponent implements OnInit {
   department:string = 'Hostel';
   //to be fetched from dataservice
   ngOnInit(): void {
+    if(!localStorage.getItem('isAdmin')){
+      window.location.href = '/home'
+    }
   }
 
 }

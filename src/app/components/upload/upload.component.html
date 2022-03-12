@@ -1,6 +1,6 @@
 <div class="main">
     <div id="dragbox" *ngIf="fileNames.length==0" draggable="true" ngClass="{{dragAreaClass}}">
-        <p *ngIf="dragAreaClass=='dragarea'" style="font-size: 30px;color: grey;">Drag your records file 📂 here</p>
+        <p *ngIf="dragAreaClass=='dragarea'" style="font-size: 30px;color: grey;">Drag your file 📂 here</p>
         <p *ngIf="dragAreaClass=='droparea'" style="font-size: 30px;color: grey;">Drop it like a mic 🎤</p>
     </div>
     <mat-form-field *ngIf="fileNames.length>0">

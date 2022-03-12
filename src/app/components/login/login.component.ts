@@ -21,13 +21,13 @@ export class LoginComponent implements OnInit {
       this.authenticating = true;
       const auth_code = window.location.href.split('?code=')[1];
       // window.alert('code:'+auth_code)
-      this.dataService.AuthenticateSSO(auth_code).subscribe((v)=>{
-        window.alert(JSON.stringify(v))
-        // this.dataService.GetFillCurrentUser().subscribe((user)=>{
-        //   window.alert(JSON.stringify(user))
-        //   this.router.navigate(['home'])
-
-        // })
+      this.dataService.AuthenticateSSO(auth_code).subscribe((v:any)=>{
+        // window.alert(JSON.stringify(v))
+        localStorage.setItem('RN',v.roll_no)
+        //configure admin params
+        // localStorage.setItem('isAdmin','true')
+        localStorage.removeItem('isAdmin')
+        window.location.href = "/home"
       })
     }
   }

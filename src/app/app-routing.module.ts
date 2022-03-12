@@ -26,7 +26,6 @@ const routes: Routes = [
     path:"",
     component:FullComponent,
     children: [
-      // {path:"", redirectTo:"/home", pathMatch:"full"},
       {path:"admin",component:MenuComponent},
       {path:"home", component:ProductComponent},
       {path:"table", component:GridListComponent},

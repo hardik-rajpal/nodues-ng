@@ -7,9 +7,12 @@
       <mat-card>
         <mat-card-content>
             <div class="loginpage">
-                <button mat-raised-button (click)="login()" style="font-size: 25px;padding: 10px;border-radius: 50px; background-color: blue;color: white;">
+                <button *ngIf="!authenticating" mat-raised-button (click)="login()" style="font-size: 25px;padding: 10px;border-radius: 50px; background-color: blue;color: white;">
                     Log In with SSO
                 </button>
+                <p *ngIf="authenticating">
+                  Authenticating
+                </p>
             </div>
         </mat-card-content>
       </mat-card>

@@ -116,11 +116,20 @@ export class FullComponent implements OnInit{
     //   menu: "Slide Toggle",
     // },
   ]
+  logout(){
+    localStorage.removeItem('RN')
+    window.location.href = '/login'
+  }
   ngOnInit() {
     // this.dataService.GetFillCurrentUser().subscribe(v=>{
       // console.log(v)
-      let isAdmin = true;
-      if(isAdmin){
+      if(!localStorage.getItem('RN')){
+        window.location.href = '/login'
+      }
+      let isAdmin;
+      console.log(localStorage.getItem('isAdmin'))
+      if(localStorage.getItem('isAdmin')==='true'){
+        isAdmin = true;
         this.sidebarMenu = [
           {
             link: "/admin",
@@ -130,8 +139,9 @@ export class FullComponent implements OnInit{
         ]
       }
       else{
-
+        isAdmin = false;
       }
+
     // })
   }
 
