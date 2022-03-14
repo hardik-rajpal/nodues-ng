@@ -30,7 +30,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     DashboardComponent,
     SalesComponent,
     ActivityComponent,
-    ProductComponent,
+    // ProductComponent,
   ]
 })
 export class DashboardModule { }

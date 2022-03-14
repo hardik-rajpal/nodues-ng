@@ -4,6 +4,7 @@ import { DataService } from 'src/app/data.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
+  styleUrls:['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
   @ViewChild('filebox') filebox!:ElementRef;
@@ -12,7 +13,11 @@ export class MenuComponent implements OnInit {
     //TODO: Pop up confirmation
 
   }
-  
+  submitFile(file:any){
+    this.dataService.sendAdminFiles(file).subscribe((v:any)=>{
+      console.log(v)
+    })
+  }
   constructor(private dataService:DataService) { }
   department:string = 'Hostel';
   //to be fetched from dataservice

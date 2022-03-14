@@ -17,7 +17,7 @@
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef> Status </th>
           <td mat-cell *matCellDef="let element">
-            <span class="{{badgeMap(element.status)}} rounded-pill">{{element.status}}</span>
+            <span class="{{myclass.badgeMap(element.status)}} rounded-pill">{{element.status}}</span>
             <p *ngIf="element.status=='Due'">Balance: Rs. {{element.balance}}</p>
           </td>
         </ng-container>
@@ -31,12 +31,17 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element">
-            <ng-container *ngFor="let action of actionsMap(element.status)">
-              <button mat-raised-button class="me-8 mb-8" color="{{colorMap(action)}}" >{{action}}</button>
+            <ng-container>
+              <button mat-raised-button class="me-8 mb-8" color="primary" (click)="inquireDialog(element)">
+                Inquire
+              </button>
+              <button mat-raised-button class="me-8 mb-8" color="accent" (click)="inquireDialog(element)">
+                Pay
+              </button>
+              
             </ng-container>
           </td>
         </ng-container>
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>

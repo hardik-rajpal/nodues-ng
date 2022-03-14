@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertsComponent } from './alerts/alerts.component';
 import { FeatherModule } from 'angular-feather';
-import { allIcons } from 'angular-feather/icons';
+import { allIcons, Upload } from 'angular-feather/icons';
 import { FormsComponent } from './forms/forms.component';
 import { DemoFlexyModule } from '../demo-flexy-module';
 import { GridListComponent } from './grid-list/grid-list.component';
@@ -64,6 +64,7 @@ import { LoginComponent } from './login/login.component'
     SliderComponent,
     SlideToggleComponent,
     ButtonsComponent,
+    UploadComponent
   ]
 })
 export class ComponentsModule { }

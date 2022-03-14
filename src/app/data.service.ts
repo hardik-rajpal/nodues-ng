@@ -53,10 +53,23 @@ export class DataService {
     let redir = SSO_REDIR
     return this.http.get(`http://localhost:8000/login?code=${code}&redir=${redir}`,);
   }
-  sendFiles(files:any[]){
+  sendAdminFiles(files:any[]){
     let uploadData = new FormData();
     console.log(files[0].name);
     uploadData.append('file1',files[0],files[0].name)
+    uploadData.append('userID','Get from server by RN')
+    //userid should supply department etc.
+    //add a field only if necessary
     return this.http.post(API.SubmitFile+'upload',uploadData)
+  }
+  sendInquiry(comments:string,file?:any){
+    let fdata = new FormData();
+    if(file){
+      fdata.append('proof', file)
+    }
+    fdata.append('comments',comments)
+    fdata.append('userID',localStorage.getItem('RN')!)
+    return this.http.post(API.submitInquiry, fdata)
+
   }
 }

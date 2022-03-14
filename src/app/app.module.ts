@@ -9,16 +9,20 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FullComponent } from './layouts/full/full.component';
 import { DemoFlexyModule } from './demo-flexy-module'
-
+import { MatExpansionModule } from '@angular/material/expansion';
 // Modules
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ComponentsModule } from './components/components.module';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogOptionsDialog } from './dashboard/dashboard-components/product/dialog-options';
+import { ProductComponent } from './dashboard/dashboard-components/product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FullComponent
+    FullComponent,
+    DialogOptionsDialog,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardModule,
     ComponentsModule,
     HttpClientModule,
+    MatExpansionModule,
+    MatDialogModule,
     FormsModule
   ],
   providers: [],

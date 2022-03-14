@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogOptionsDialog } from './dialog-options';
 
 export interface PeriodicElement {
   department: string;
@@ -19,40 +21,28 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-
   displayedColumns: string[] = ['department', 'status', 'comments','actions'];
   dataSource = ELEMENT_DATA;
-  badgeMap:Function =(status:string)=> {
+  static badgeMap(status:string){
     return {
     'Due':'badge badge-danger',
     'Cleared':'badge badge-success'
   }[status];
   }
-  actionsMap:Function = (status:string)=>{
-    return {
-      'Due':['Inquire','Pay'],
-      'Cleared':['Save']
-    }[status]
+  myclass=ProductComponent;
+  inquireDialog(element:PeriodicElement){
+    
+    this.dialog.open(DialogOptionsDialog,{
+      data:element
+    })
   }
-  inquire:Function = (element:PeriodicElement)=>null;
-  // functionMap:Function = (action:string,element:PeriodicElement)=>{
-  //   return {
-  //     'Inquire':this.inquire
-  //   }[action](element)
-  // }
-  colorMap:Function = (action:string)=>{
-    return {
-      'Inquire':'primary',
-      'Pay':'accent',
-      'Save':'primary'
-    }[action]
-  }
-  constructor() { }
+  constructor(public dialog:MatDialog) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('isAdmin')){
       window.location.href = '/admin'
     }
+    // this.inquireDialog(this.dataSource[0])
   }
 
 }

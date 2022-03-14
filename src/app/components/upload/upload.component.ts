@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Output, ViewChild,EventEmitter, HostListener } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild,EventEmitter, HostListener, Input } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 
 @Component({
@@ -9,6 +9,8 @@ import { DataService } from 'src/app/data.service';
 export class UploadComponent implements OnInit {
   @ViewChild('files') filesBox!:ElementRef
   @Output('onBurstsReady') onBurstsReady:EventEmitter<string> = new EventEmitter();
+  @Output('fileRec') fileRec:EventEmitter<any> = new EventEmitter();
+  @Input('fileSender') fileSender!:Function
   files:any[] = []
   finalData!:any;
   dragAreaClass!:string;
@@ -71,10 +73,9 @@ export class UploadComponent implements OnInit {
     }
   }
   submit(){
-    this.server.sendFiles(this.files).subscribe((v:any)=>{
-      console.log(v)
-      this.submitted = true;
-    })
+    this.fileRec.emit(this.files[0])
+    // this.fileSender(this.files[0])
+    this.submitted = true
   }
   constructor(private server:DataService) { }
 

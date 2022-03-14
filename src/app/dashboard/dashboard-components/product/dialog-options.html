@@ -1,0 +1,19 @@
+<div class="main">
+    <h3>Department: {{data.department}}</h3>
+    <h3>Status:
+        <span class="{{homeClass.badgeMap(data.status)}} rounded-pill">{{data.status}}</span>
+    </h3>
+    <h3>
+        Balance: Rs. {{data.balance}}
+    </h3>
+    <h3>Comments: {{data.comments}}
+    </h3>
+<mat-form-field>
+    <mat-label>Your Comments</mat-label>
+    <textarea matInput [value]="studentComments"></textarea>
+</mat-form-field>
+<!-- <mat-form-field> -->
+    <mat-label>Proofs (Optional)</mat-label>
+    <app-upload (fileRec) = "attachFile($event)"></app-upload>
+<!-- </mat-form-field> -->
+</div>

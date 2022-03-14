@@ -1,8 +1,4 @@
-<!-- ============================================================== -->
-<!-- row -->
-<!-- ============================================================== -->
-<div fxLayout="row" fxLayoutWrap="wrap">
-    <!-- Card column -->
+<div fxLayout="row" fxLayoutWrap="wrap" class="mainLogin">
     <div fxFlex="100%" fxFlex="100">
       <mat-card>
         <mat-card-content>
@@ -10,9 +6,9 @@
                 <button *ngIf="!authenticating" mat-raised-button (click)="login()" style="font-size: 25px;padding: 10px;border-radius: 50px; background-color: blue;color: white;">
                     Log In with SSO
                 </button>
-                <p *ngIf="authenticating">
+                <h1 *ngIf="authenticating">
                   Authenticating
-                </p>
+                </h1>
             </div>
         </mat-card-content>
       </mat-card>
