@@ -11,7 +11,7 @@
     </mat-form-field>
 <section class="section1">
 <button *ngIf="fileNames.length==0" mat-raised-button color="accent" (click)="propagateClick()">Upload File</button>
-<button *ngIf="fileNames.length>0" mat-raised-button color="primary" (click)="submit()">Submit Files</button>
+<button *ngIf="(fileNames.length>0)&&showSubmitBtn" mat-raised-button color="primary" (click)="submit()">Submit Files</button>
 </section>
 <input style="display: none;" type="file" (change)="updateFile($event)" #files>
 <section *ngIf="submitted" class="section1">

@@ -136,6 +136,11 @@ export class FullComponent implements OnInit{
             icon: "home",
             menu: "Dashboard",
           },
+          {
+            link: "/inquiries",
+            icon: "info",
+            menu: "Inquiries",
+          }          
         ]
       }
       else{

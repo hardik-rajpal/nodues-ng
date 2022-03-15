@@ -3,5 +3,6 @@ export const API = {
     Login:'login{?code,redir}',
     Logout:'api/logout',
     SubmitFile:'api/records',
-    submitInquiry:'api/inquiry',
+    submitInquiry:'api/inquiry',//POST
+    inquiriesByAdmin:'api/inquiry{?userID}'//GET
 }

@@ -8,9 +8,9 @@ import { DataService } from 'src/app/data.service';
 })
 export class UploadComponent implements OnInit {
   @ViewChild('files') filesBox!:ElementRef
-  @Output('onBurstsReady') onBurstsReady:EventEmitter<string> = new EventEmitter();
   @Output('fileRec') fileRec:EventEmitter<any> = new EventEmitter();
-  @Input('fileSender') fileSender!:Function
+  @Output('submitFile') submitFile:EventEmitter<any> = new EventEmitter();
+  @Input('showSubmitBtn') showSubmitBtn:boolean = false;
   files:any[] = []
   finalData!:any;
   dragAreaClass!:string;
@@ -54,6 +54,7 @@ export class UploadComponent implements OnInit {
       this.error = ""
       this.files = [files[0]];
       this.fileNames = [files[0].name]
+      this.fileRec.emit(files[0])
     }
   }
   
@@ -73,8 +74,7 @@ export class UploadComponent implements OnInit {
     }
   }
   submit(){
-    this.fileRec.emit(this.files[0])
-    // this.fileSender(this.files[0])
+    this.submitFile.emit(this.files[0])
     this.submitted = true
   }
   constructor(private server:DataService) { }

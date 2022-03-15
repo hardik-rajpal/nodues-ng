@@ -7,14 +7,18 @@ import { DataService } from 'src/app/data.service';
   styleUrls:['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+  file!:any
   @ViewChild('filebox') filebox!:ElementRef;
   propagateClick(){
     this.filebox.nativeElement.click()
     //TODO: Pop up confirmation
 
   }
+  updateFile(file:any){
+    this.file = file;
+  }
   submitFile(file:any){
-    this.dataService.sendAdminFiles(file).subscribe((v:any)=>{
+    this.dataService.sendAdminFiles(this.file).subscribe((v:any)=>{
       console.log(v)
     })
   }

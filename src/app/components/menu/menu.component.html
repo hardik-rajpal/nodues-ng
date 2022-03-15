@@ -7,7 +7,7 @@
     <mat-card>
       <mat-card-content>
         <h4 class="mb-32">Records for {{department}}</h4>
-        <app-upload (fileRec)="submitFile($event)"></app-upload>
+        <app-upload (fileRec)="updateFile($event)" (submitFile)="submitFile($event)" [showSubmitBtn] = "true"></app-upload>
         <button mat-raised-button color="primary" class="download">Download Records</button>
       </mat-card-content>
     </mat-card>

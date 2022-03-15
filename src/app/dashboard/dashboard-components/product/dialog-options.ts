@@ -23,6 +23,8 @@ import { PeriodicElement, ProductComponent } from "./product.component";
     }
     attachFile(file:any){
       this.inquiryProof = file;
+    }
+    submitInquiry(){
       this.dataService.sendInquiry(this.studentComments,this.inquiryProof).subscribe(v=>{
         console.log(v)
       })

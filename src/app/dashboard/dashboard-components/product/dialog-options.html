@@ -12,8 +12,9 @@
     <mat-label>Your Comments</mat-label>
     <textarea matInput [value]="studentComments"></textarea>
 </mat-form-field>
-<!-- <mat-form-field> -->
     <mat-label>Proofs (Optional)</mat-label>
-    <app-upload (fileRec) = "attachFile($event)"></app-upload>
-<!-- </mat-form-field> -->
+    <app-upload (fileRec) = "attachFile($event)" [showSubmitBtn]="false"></app-upload>
+    <div class="submitbtn">
+        <button mat-raised-button (click)="submitInquiry()">Submit Inquiry</button>
+    </div>
 </div>

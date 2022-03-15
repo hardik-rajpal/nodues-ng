@@ -31,7 +31,7 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element">
-            <ng-container>
+            <ng-container *ngIf="element.status=='Due'">
               <button mat-raised-button class="me-8 mb-8" color="primary" (click)="inquireDialog(element)">
                 Inquire
               </button>
@@ -39,6 +39,11 @@
                 Pay
               </button>
               
+            </ng-container>
+            <ng-container *ngIf="element.status=='Cleared'">
+              <button mat-raised-button class="me-8 mb-8" color="primary" (click)="inquireDialog(element)">
+                Save
+              </button>
             </ng-container>
           </td>
         </ng-container>

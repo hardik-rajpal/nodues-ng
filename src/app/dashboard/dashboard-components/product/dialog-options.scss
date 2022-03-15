@@ -5,7 +5,7 @@
 textarea{
   width: 100%;
 }
-h3{
+h5{
   display: flex;
   align-content: center;
   align-items: center;
@@ -17,4 +17,12 @@ span.rounded-pill{
 }
 .mat-form-field{
   width: 100%;
+}
+.submitbtn{
+  padding: 10px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { DataService } from 'src/app/data.service';
+import { Inquiry } from 'src/app/interfaces';
+import {ProductComponent} from 'src/app/dashboard/dashboard-components/product/product.component';
 interface alerts {
   border: string;
   background: string;
@@ -22,87 +24,35 @@ interface desc {
 @Component({
   selector: 'app-alerts',
   templateUrl: './alerts.component.html',
+  styleUrls:['./alerts.component.scss']
 })
 export class AlertsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  inquiries:Inquiry[] = []
+  @ViewChildren('docLink') docLinks!:ElementRef[]
+  productClass=ProductComponent
+  constructor(private dataService:DataService) { }
+  openDoc(inquiry:Inquiry){
+    this.docLinks[this.inquiries.indexOf(inquiry)].nativeElement.click()
   }
+  ngOnInit(): void {
+    // this.dataService.fetchAllInquiries(localStorage.getItem('RN')!).subscribe(v=>{
 
-  alerts: alerts[] = [
-    {
-      border: "alert-border-danger",
-      background: "alert-danger",
-      color: "alert-text-danger",
-      icon: "alert-circle",
-      iconColor: "text-danger",
-      message: "This is an error alert — check it out!",
-    },
-    {
-      border: "alert-border-warning",
-      background: "alert-warning",
-      color: "alert-text-warning",
-      icon: "alert-triangle",
-      iconColor: "text-warning",
-      message: "This is a warning alert — check it out!",
-    },
-    {
-      border: "alert-border-info",
-      background: "alert-info",
-      color: "alert-text-info",
-      icon: "info",
-      iconColor: "text-info",
-      message: "This is an info alert — check it out!",
-    },
-    {
-      border: "alert-border-success",
-      background: "alert-success",
-      color: "alert-text-success",
-      icon: "check-circle",
-      iconColor: "text-success",
-      message: "This is an success alert — check it out!",
-    },
-  ]
-
-
-  desc: desc[] = [
-    {
-      background: "alert-danger",
-      color: "alert-text-danger",
-      icon: "alert-circle",
-      iconColor: "text-danger",
-      heading: "Error",
-      title: "This is an error alert —",
-      subheading: "check it out!",
-    },
-    {
-      background: "alert-warning",
-      color: "alert-text-warning",
-      icon: "alert-triangle",
-      iconColor: "text-warning",
-      heading: "Warning",
-      title: "This is an warning alert —",
-      subheading: "check it out!",
-    },
-    {
-      background: "alert-info",
-      color: "alert-text-info",
-      icon: "info",
-      iconColor: "text-info",
-      heading: "Info",
-      title: "This is an info alert —",
-      subheading: "check it out!",
-    },
-    {
-      background: "alert-success",
-      color: "alert-text-success",
-      icon: "check-circle",
-      iconColor: "text-success",
-      heading: "Success",
-      title: "This is an success alert —",
-      subheading: "check it out!",
-    },
-  ]
-
+    // })
+    this.inquiries = [
+      {
+        departmentID:'Distribution',
+        comment:'The star sticker was barely visible',
+        status:0,
+        studentID:'Gustavo',
+        document:'https://i.imgur.com/4VPpbQ3b.jpg',
+      },
+      {
+        departmentID:'Distribution',
+        comment:'The star sticker was well hidden',
+        status:0,
+        studentID:'Fring',
+        document:'https://i.imgur.com/JYuFysLb.jpg'
+      }
+    ]
+  }
 }

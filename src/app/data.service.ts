@@ -49,6 +49,9 @@ export class DataService {
     }
     observer.next(this.currentUser)
   }
+  fetchAllInquiries(userID:string){
+    return this.FireGET(API.inquiriesByAdmin,{userID:userID})
+  }
   AuthenticateSSO(code:string){
     let redir = SSO_REDIR
     return this.http.get(`http://localhost:8000/login?code=${code}&redir=${redir}`,);

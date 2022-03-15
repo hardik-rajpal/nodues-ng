@@ -18,5 +18,6 @@ export interface Inquiry{
     departmentID:string;
     comment:string;
     status:number;
-
+    studentID:string;
+    document:string;
 }
