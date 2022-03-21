@@ -30,7 +30,9 @@ const routes: Routes = [
       {path:"home", component:ProductComponent},
       {path:"table", component:GridListComponent},
       {path:"progress-snipper", component:ExpansionComponent},
-      {path:'inquiries',component:AlertsComponent}
+      {path:'inquiries',component:AlertsComponent},
+      {path:'**',component:MenuComponent}
+      
       // {path:"alerts", component:AlertsComponent},
       // {path:"forms", component:FormsComponent},
       // {path:"grid-list", component:GridListComponent},
