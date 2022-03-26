@@ -25,9 +25,21 @@ import { PeriodicElement, ProductComponent } from "./product.component";
       this.inquiryProof = file;
     }
     submitInquiry(){
-      this.dataService.sendInquiry(this.studentComments,this.inquiryProof).subscribe(v=>{
-        console.log(v)
-      })
+      let docID = ''
+      if(this.inquiryProof!==null){
+        this.dataService.uploadStudentProof(this.inquiryProof).subscribe((resp:any)=>{
+          docID = resp.docID
+          this.dataService.sendInquiry(this.studentComments,docID).subscribe(v=>{
+            console.log(v)
+          })
+        })  
+      }
+      else{
+          this.dataService.sendInquiry(this.studentComments,docID).subscribe(v=>{
+            console.log(v)
+          })
+      }
+      
     }
     homeClass = ProductComponent;
     binSzMin:number = 5;

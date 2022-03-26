@@ -22,11 +22,26 @@ export class LoginComponent implements OnInit {
       const auth_code = window.location.href.split('?code=')[1];
       // window.alert('code:'+auth_code)
       this.dataService.AuthenticateSSO(auth_code).subscribe((v:any)=>{
-        // window.alert(JSON.stringify(v))
-        localStorage.setItem('RN',v.roll_no)
+        window.alert(JSON.stringify(v))
+        localStorage.setItem('RN',v.user)
+        /*
+        v = {
+          sessionid:...
+          user:'roll number',
+          username: 'Hardik Rajpal',
+          profile_id:'profile id'
+          is_admin:true or false.
+        }
+        
+        
+        */
         //configure admin params
-        // localStorage.setItem('isAdmin','true')
-        localStorage.removeItem('isAdmin')
+        if(v.is_admin){
+          localStorage.setItem('isAdmin','true')
+        }
+        else{
+          localStorage.removeItem('isAdmin')
+        }
         window.location.href = "/home"
       })
     }

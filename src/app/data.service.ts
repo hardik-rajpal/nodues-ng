@@ -7,7 +7,7 @@ import * as uriTemplates from 'uri-templates';
 const SSOHOST = environment.sso_host;
 const CLIENT_ID = environment.sso_client_id;
 const SSO_REDIR = (environment.host+'login');
-
+const apibaseUrl  = 'http://localhost:8000/';
 @Injectable({
   providedIn: 'root'
 })
@@ -54,25 +54,28 @@ export class DataService {
   }
   AuthenticateSSO(code:string){
     let redir = SSO_REDIR
-    return this.http.get(`http://localhost:8000/login?code=${code}&redir=${redir}`,);
+    return this.http.get(`http://localhost:8000/api/login?code=${code}&redir=${redir}`,);
   }
-  sendAdminFiles(files:any[]){
+  sendAdminFiles(file:any){
     let uploadData = new FormData();
-    console.log(files[0].name);
-    uploadData.append('file1',files[0],files[0].name)
-    uploadData.append('userID','Get from server by RN')
+    console.log(file.name);
+    uploadData.append('file',file,file.name)
+    uploadData.append('userID',localStorage.getItem('RN')!)
     //userid should supply department etc.
     //add a field only if necessary
-    return this.http.post(API.SubmitFile+'upload',uploadData)
+    return this.http.post(apibaseUrl+API.SubmitFile,uploadData)
   }
-  sendInquiry(comments:string,file?:any){
-    let fdata = new FormData();
-    if(file){
-      fdata.append('proof', file)
-    }
-    fdata.append('comments',comments)
-    fdata.append('userID',localStorage.getItem('RN')!)
-    return this.http.post(API.submitInquiry, fdata)
+  uploadStudentProof(file:any){
+    let fdata = new FormData()
+    fdata.append('file',file)
+    return this.http.post(API.uploadProof,fdata)
+  }
+  sendInquiry(comments:string,docID:string){
+    return this.http.post(API.submitInquiry, {
+      comments:comments,
+      userID:localStorage.getItem('RN')!,
+      docID:docID
+    })
 
   }
 }

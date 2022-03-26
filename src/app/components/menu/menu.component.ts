@@ -18,7 +18,8 @@ export class MenuComponent implements OnInit {
     this.file = file;
   }
   submitFile(file:any){
-    this.dataService.sendAdminFiles(this.file).subscribe((v:any)=>{
+    console.log(file)
+    this.dataService.sendAdminFiles(file).subscribe((v:any)=>{
       console.log(v)
     })
   }

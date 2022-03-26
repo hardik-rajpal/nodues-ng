@@ -120,14 +120,17 @@ export class FullComponent implements OnInit{
     localStorage.removeItem('RN')
     window.location.href = '/login'
   }
+  rollNumber:string= '00000000';
   ngOnInit() {
+    this.rollNumber = localStorage.getItem('RN')!
     // this.dataService.GetFillCurrentUser().subscribe(v=>{
       // console.log(v)
       if(!localStorage.getItem('RN')){
         window.location.href = '/login'
       }
       let isAdmin;
-      console.log(localStorage.getItem('isAdmin'))
+
+      // console.log(localStorage.getItem('isAdmin'))
       if(localStorage.getItem('isAdmin')==='true'){
         isAdmin = true;
         this.sidebarMenu = [
@@ -146,6 +149,7 @@ export class FullComponent implements OnInit{
       else{
         isAdmin = false;
       }
+
 
     // })
   }
