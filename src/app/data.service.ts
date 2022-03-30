@@ -41,6 +41,9 @@ export class DataService {
       })
     })
   }
+  getAdminRecords(){
+    return this.http.get(apibaseUrl+API.SubmitFile+`?userID=${localStorage.getItem('RN')!}`)
+  }
   logInUser(observer: Subscriber<any>, profile: any, setLocal: boolean) {
     this.loggedIn = true;
     this.currentUser = profile
@@ -54,7 +57,7 @@ export class DataService {
   }
   AuthenticateSSO(code:string){
     let redir = SSO_REDIR
-    return this.http.get(`http://localhost:8000/api/login?code=${code}&redir=${redir}`,);
+    return this.http.get(`http://localhost:8000/api/accounts/login?code=${code}&redir=${redir}`,);
   }
   sendAdminFiles(file:any){
     let uploadData = new FormData();

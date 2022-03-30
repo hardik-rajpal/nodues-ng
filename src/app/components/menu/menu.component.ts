@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/data.service';
-
+import {saveAs} from 'file-saver';
+import { objectMap } from 'src/app/utils';
+const recordHeader = 'StudentID,Balance,Comments,Last Updated'
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -18,9 +20,28 @@ export class MenuComponent implements OnInit {
     this.file = file;
   }
   submitFile(file:any){
-    console.log(file)
     this.dataService.sendAdminFiles(file).subscribe((v:any)=>{
-      console.log(v)
+      if(v.status==200){
+        window.alert('Records Updated! 🧾')
+      }
+      else{
+        window.alert('Failed to update records. 😶')
+      }
+    })
+  }
+  downloadRecords(){
+    this.dataService.getAdminRecords().subscribe((data:any)=>{
+      if(data.data.length>0){
+        let string = [recordHeader,
+          ...data.data.map((record:any,j:number,[])=>{
+          return [record.roll_number,record.balance,record.comment,record.time_posted]
+        })].join('\n')
+        saveAs(new Blob([string],{
+          type:'text/plain'
+        }),
+        'Records'
+        )
+      }
     })
   }
   constructor(private dataService:DataService) { }
