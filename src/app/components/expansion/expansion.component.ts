@@ -1,33 +1,23 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { mapServerRequirement, Requirement } from 'src/app/dashboard/dashboard-components/product/product.component';
+import { DataService } from 'src/app/data.service';
+export interface Query{
+  id:number;
+  requirement:Requirement;
+  comment:string;
+  status:boolean;
+  postTime:string;
+  response:string;
+  document:string;//None or link to hosted document.
+}
 @Component({
   selector: 'app-expansion',
   templateUrl: './expansion.component.html',
   styleUrls: ['./expansion.component.scss']
 })
-export class ExpansionComponent {
-
-  inquiries=[
-    {
-      department:'Hostel',
-      text:'Dude I slept on the streets. I don\'t owe nothing.',
-      response:'Ahahahahaha',
-      accepted:0,
-    },
-    {
-      department:'Chem Lab',
-      text:'What\'s the point of beakers.',
-      response:'Fair point',
-      accepted:2,
-    },
-    {
-      department:'GymKhana',
-      text:'Those balls were not made of steel',
-      response:'Hmmmm',
-      accepted:1,
-    }
-
-  ]
+export class ExpansionComponent implements OnInit{
+  constructor(private dataService:DataService){}
+  queries:Query[]=[]
   badgeMap:Function = (accepted:number)=>{
     return ["badge badge-danger","badge badge-primary","badge badge-success"][accepted]
   }
@@ -36,17 +26,26 @@ export class ExpansionComponent {
   }
   panelOpenState = false;
   step = 0;
-
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
+  ngOnInit() {
+    this.dataService.fetchAllqueries(localStorage.getItem('RN')!).subscribe((resp:any)=>{
+      if(resp.data){
+        this.queries = resp.data.map((query:any)=>{
+          return mapServerQuery(query)
+        })
+      }
+    })
   }
   
 }
+export function mapServerQuery(query: any) {
+  return {
+    id:query.id,
+    comment:query.comment,
+    document:query.document,
+    postTime:query.time_posted,
+    status:query.status_check,
+    response:query.response,
+    requirement:mapServerRequirement(query.requirement)
+  } as Query
+}
+

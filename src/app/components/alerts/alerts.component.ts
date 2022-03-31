@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { DataService } from 'src/app/data.service';
-import { Inquiry } from 'src/app/interfaces';
+// import { query } from 'src/app/interfaces';
+import { Query } from '../expansion/expansion.component';
 import {ProductComponent} from 'src/app/dashboard/dashboard-components/product/product.component';
+import { mapServerQuery } from '../expansion/expansion.component';
 interface alerts {
   border: string;
   background: string;
@@ -27,32 +29,30 @@ interface desc {
   styleUrls:['./alerts.component.scss']
 })
 export class AlertsComponent implements OnInit {
-  inquiries:Inquiry[] = []
+  queries:Query[] = []
+  unrespondedQueries:Query[] = []
+  respondedQueries:Query[] = []
   @ViewChildren('docLink') docLinks!:ElementRef[]
   productClass=ProductComponent
   constructor(private dataService:DataService) { }
-  openDoc(inquiry:Inquiry){
-    this.docLinks[this.inquiries.indexOf(inquiry)].nativeElement.click()
+  openDoc(query:Query){
+    this.docLinks[this.queries.indexOf(query)].nativeElement.click()
+  }
+  respondToQuery(query:Query,accepted:boolean){
+    this.dataService.respondToQuery(query.response,query.id,accepted).subscribe(resp=>{
+      console.log(resp)
+    })
   }
   ngOnInit(): void {
-    // this.dataService.fetchAllInquiries(localStorage.getItem('RN')!).subscribe(v=>{
-
-    // })
-    this.inquiries = [
-      {
-        departmentID:'Distribution',
-        comment:'The star sticker was barely visible',
-        status:0,
-        studentID:'Gustavo',
-        document:'https://i.imgur.com/4VPpbQ3b.jpg',
-      },
-      {
-        departmentID:'Distribution',
-        comment:'The star sticker was well hidden',
-        status:0,
-        studentID:'Fring',
-        document:'https://i.imgur.com/JYuFysLb.jpg'
+    this.dataService.fetchAllqueries(localStorage.getItem('RN')!).subscribe((resp:any)=>{
+      console.log(resp)
+      if(resp.data){
+        this.queries = resp.data.map((query:any)=>{
+          return mapServerQuery(query)
+        })
+        this.respondedQueries = this.queries.filter(q=>q.status!==null)
+        this.unrespondedQueries=this.queries.filter(q=>q.status===null)
       }
-    ]
+    })
   }
 }

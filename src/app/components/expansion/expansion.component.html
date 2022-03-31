@@ -6,17 +6,17 @@
     <h4 class="mb-32">Inquries</h4>
     <mat-card-title></mat-card-title>
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let inquiry of inquiries">
+      <mat-expansion-panel *ngFor="let query of queries">
         <mat-expansion-panel-header>
-          <mat-panel-title>{{inquiry.department}}</mat-panel-title>
+          <mat-panel-title>{{query.requirement.department}}</mat-panel-title>
           <mat-panel-description>
             <div style="display: flex;flex-direction: column;align-items: center;align-content: center;">
-            {{inquiry.text}} 
-            <span class="{{badgeMap(inquiry.accepted)}} rounded-pill">{{captionMap(inquiry.accepted)}}</span>
+            {{query.comment}} 
+            <span class="{{badgeMap(query.status)}} rounded-pill">{{captionMap(query.status)}}</span>
             </div>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>{{inquiry.response}}</p>
+        <p>{{query.response===''?"No response yet. 😟":query.response}}</p>
       </mat-expansion-panel>
     </mat-accordion>
   </mat-card-content>

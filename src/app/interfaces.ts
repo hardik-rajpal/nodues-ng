@@ -14,7 +14,7 @@ export interface DueCategory{
     balance:number;
     comments:string;
 }
-export interface Inquiry{
+export interface query{
     departmentID:string;
     comment:string;
     status:number;

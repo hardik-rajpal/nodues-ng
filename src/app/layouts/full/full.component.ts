@@ -43,7 +43,7 @@ export class FullComponent implements OnInit{
     {
       link: "/progress-snipper",
       icon: "loader",
-      menu: "Inquiries",
+      menu: "Queries",
     },
     // {
     //   link: "/button",
@@ -140,9 +140,9 @@ export class FullComponent implements OnInit{
             menu: "Dashboard",
           },
           {
-            link: "/inquiries",
+            link: "/queries",
             icon: "info",
-            menu: "Inquiries",
+            menu: "Queries",
           }          
         ]
       }

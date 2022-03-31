@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { DataService } from "src/app/data.service";
-import { PeriodicElement, ProductComponent } from "./product.component";
+import { Requirement, ProductComponent } from "./product.component";
 
 @Component({
     selector:'dialog-options',
@@ -11,10 +11,10 @@ import { PeriodicElement, ProductComponent } from "./product.component";
   export class DialogOptionsDialog implements OnInit{
     constructor(
       public dialogRef:MatDialogRef<DialogOptionsDialog>,
-      @Inject(MAT_DIALOG_DATA) public data:PeriodicElement,
+      @Inject(MAT_DIALOG_DATA) public data:Requirement,
       public dataService:DataService
     ){}
-    inquiryProof!:any;
+    queryProof!:any;
     studentComments:string = "";
     updateData(){
     //   this.dataService.toggleVars(this.binSzValue,this.varSzValue).subscribe((v:any)=>{
@@ -22,21 +22,23 @@ import { PeriodicElement, ProductComponent } from "./product.component";
     //   })
     }
     attachFile(file:any){
-      this.inquiryProof = file;
+      this.queryProof = file;
     }
-    submitInquiry(){
+    submitquery(){
       let docID = ''
-      if(this.inquiryProof!==null){
-        this.dataService.uploadStudentProof(this.inquiryProof).subscribe((resp:any)=>{
+      console.log(this.queryProof)
+      if(this.queryProof!==undefined){
+        this.dataService.uploadStudentProof(this.queryProof).subscribe((resp:any)=>{
           docID = resp.docID
-          this.dataService.sendInquiry(this.studentComments,docID).subscribe(v=>{
+          this.dataService.sendquery(this.data,this.studentComments,docID).subscribe(v=>{
             console.log(v)
           })
         })  
       }
       else{
-          this.dataService.sendInquiry(this.studentComments,docID).subscribe(v=>{
-            console.log(v)
+          this.dataService.sendquery(this.data,this.studentComments,docID).subscribe(v=>{
+            window.alert('Query Posted!')
+            this.dialogRef.close()
           })
       }
       

@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
         
         */
         //configure admin params
+        document.cookie = `sessionid=${v.sessionid};SameSite=None; path=/`
         if(v.is_admin){
           localStorage.setItem('isAdmin','true')
         }

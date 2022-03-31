@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from 'src/app/data.service';
 import { DialogOptionsDialog } from './dialog-options';
-
-export interface PeriodicElement {
+//TODO: TAble on dashboard for admin. 
+//TODO: button for verify request.
+export interface Requirement {
+  id:number;
+  rollNumber:string;
   department: string;
   balance:number;
   status:string;
@@ -13,9 +16,9 @@ export interface PeriodicElement {
 const getStatus = (balance:number)=>{
   return balance>0?'Due':'Cleared'
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  {department: 'Hostel', status: getStatus(42),balance: 42, comments:'We know what you did.',timePosted:'0 AD'},
-  {department: 'Hostel', status: getStatus(0),balance:0,comments:'None',timePosted:'0 AD'},
+const ELEMENT_DATA: Requirement[] = [
+  // {id: 0,department: 'Hostel', status: getStatus(42),balance: 42, comments:'We know what you did.',timePosted:'0 AD'},
+  // {id: 1,department: 'Hostel', status: getStatus(0),balance:0,comments:'None',timePosted:'0 AD'},
   
 ];
 
@@ -35,7 +38,7 @@ export class ProductComponent implements OnInit {
   }[status];
   }
   myclass=ProductComponent;
-  inquireDialog(element:PeriodicElement){
+  inquireDialog(element:Requirement){
     
     this.dialog.open(DialogOptionsDialog,{
       data:element
@@ -50,13 +53,7 @@ export class ProductComponent implements OnInit {
     this.dataService.getAdminRecords().subscribe((v:any)=>{
       console.log(v)
       this.dataSource  = v.data.map((record:any,j:number,[])=>{
-        return {
-          balance:record.balance,
-          comments:record.comment,
-          department:record.department,
-          status:getStatus(record.balance),
-          timePosted:record.timePosted
-        } as PeriodicElement
+        return mapServerRequirement(record)
         //TODO: format timeposted
       })
     })
@@ -64,3 +61,15 @@ export class ProductComponent implements OnInit {
   }
 
 }
+export function mapServerRequirement(record: any) {
+  return {
+    id:record.id,
+    rollNumber:record.roll_number,
+    balance:record.balance,
+    comments:record.comment,
+    department:record.department,
+    status:getStatus(record.balance),
+    timePosted:record.timePosted
+  } as Requirement
+}
+

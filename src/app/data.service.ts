@@ -1,9 +1,10 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer, Subscriber } from 'rxjs';
 import { API } from 'src/api';
 import { environment } from 'src/environments/environment';
 import * as uriTemplates from 'uri-templates';
+import { Requirement } from './dashboard/dashboard-components/product/product.component';
 const SSOHOST = environment.sso_host;
 const CLIENT_ID = environment.sso_client_id;
 const SSO_REDIR = (environment.host+'login');
@@ -41,6 +42,14 @@ export class DataService {
       })
     })
   }
+  respondToQuery(response:string,queryID:number,accepted:boolean){
+    return this.http.put(apibaseUrl+API.submitquery,{
+      response:response,
+      queryID:queryID,
+      userID:localStorage.getItem('RN')!,
+      accepted:accepted,
+    })
+  }
   getAdminRecords(){
     return this.http.get(apibaseUrl+API.SubmitFile+`?userID=${localStorage.getItem('RN')!}`)
   }
@@ -52,8 +61,8 @@ export class DataService {
     }
     observer.next(this.currentUser)
   }
-  fetchAllInquiries(userID:string){
-    return this.FireGET(API.inquiriesByAdmin,{userID:userID})
+  fetchAllqueries(userID:string){
+    return this.FireGET(API.query,{userID:userID})
   }
   AuthenticateSSO(code:string){
     let redir = SSO_REDIR
@@ -66,6 +75,7 @@ export class DataService {
     uploadData.append('userID',localStorage.getItem('RN')!)
     //userid should supply department etc.
     //add a field only if necessary
+
     return this.http.post(apibaseUrl+API.SubmitFile,uploadData)
   }
   uploadStudentProof(file:any){
@@ -73,10 +83,10 @@ export class DataService {
     fdata.append('file',file)
     return this.http.post(API.uploadProof,fdata)
   }
-  sendInquiry(comments:string,docID:string){
-    return this.http.post(API.submitInquiry, {
-      comments:comments,
-      userID:localStorage.getItem('RN')!,
+  sendquery(req:Requirement,comments:string,docID:string){
+    return this.http.post(apibaseUrl+API.submitquery, {
+      reqID:req.id,
+      comment:comments,
       docID:docID
     })
 
