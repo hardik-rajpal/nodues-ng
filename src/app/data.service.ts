@@ -33,6 +33,8 @@ export class DataService {
     return URITemplate.fill(options);
   }
   FireGET<T>(uriTemplate: string, options: any = {}): Observable<T> {
+    options["withCredentials"] = true;
+    console.log(options)
     return this.http.get<T>(this.FillURITemplate('http://localhost:8000/' + uriTemplate, options));
   }
   GetFillCurrentUser():Observable<any>{
@@ -51,7 +53,7 @@ export class DataService {
     })
   }
   getAdminRecords(){
-    return this.http.get(apibaseUrl+API.SubmitFile+`?userID=${localStorage.getItem('RN')!}`)
+    return this.http.get(apibaseUrl+API.SubmitFile+`?userID=${localStorage.getItem('RN')!}`, {withCredentials: true})
   }
   logInUser(observer: Subscriber<any>, profile: any, setLocal: boolean) {
     this.loggedIn = true;
@@ -81,14 +83,14 @@ export class DataService {
   uploadStudentProof(file:any){
     let fdata = new FormData()
     fdata.append('file',file)
-    return this.http.post(API.uploadProof,fdata)
+    return this.http.post(API.uploadProof,fdata, {withCredentials: true})
   }
   sendquery(req:Requirement,comments:string,docID:string){
     return this.http.post(apibaseUrl+API.submitquery, {
       reqID:req.id,
       comment:comments,
       docID:docID
-    })
+    }, {withCredentials: true})
 
   }
 }

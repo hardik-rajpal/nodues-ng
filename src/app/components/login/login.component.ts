@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {DataService} from '../../data.service';
+
+import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +15,7 @@ export class LoginComponent implements OnInit {
   login(){
     window.location.href = this.dataService.GetLoginURL()
   }
-  constructor(private dataService:DataService, private activatedRoute:ActivatedRoute) { }
+  constructor(private dataService:DataService, private activatedRoute:ActivatedRoute, private cookieService:CookieService) { }
 
   ngOnInit(): void {
     const params = this.activatedRoute.snapshot.queryParams
@@ -24,6 +27,7 @@ export class LoginComponent implements OnInit {
       this.dataService.AuthenticateSSO(auth_code).subscribe((v:any)=>{
         window.alert(JSON.stringify(v))
         localStorage.setItem('RN',v.user)
+
         /*
         v = {
           sessionid:...
@@ -36,7 +40,10 @@ export class LoginComponent implements OnInit {
         
         */
         //configure admin params
-        document.cookie = `sessionid=${v.sessionid};SameSite=None; path=/`
+        // document.cookie = `sessionid=${v.sessionid};SameSite=None; path=/`
+
+        this.cookieService.set('sessionid', v.sessionid)
+
         if(v.is_admin){
           localStorage.setItem('isAdmin','true')
         }
