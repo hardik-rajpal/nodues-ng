@@ -23,6 +23,9 @@ export class DataService {
 
     return `${SSOHOST}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
   }
+  clearBalance(reqid:number){
+    return this.http.get(apibaseUrl+API.clearBalance+`?reqID=${reqid}`)
+  }
   /**
    * Fill URI Templates according to RFC 6570
    * @param uriTemplate URI Template to fill
@@ -53,7 +56,7 @@ export class DataService {
     })
   }
   getAdminRecords(){
-    return this.http.get(apibaseUrl+API.SubmitFile+`?userID=${localStorage.getItem('RN')!}`, {withCredentials: true})
+    return this.http.get(apibaseUrl+API.SubmitFile+`?userID=${localStorage.getItem('RN')!}`)
   }
   logInUser(observer: Subscriber<any>, profile: any, setLocal: boolean) {
     this.loggedIn = true;
@@ -64,7 +67,10 @@ export class DataService {
     observer.next(this.currentUser)
   }
   fetchAllqueries(userID:string){
-    return this.FireGET(API.query,{userID:userID})
+    return this.http.get(apibaseUrl+API.submitquery+'?userID='+userID,{withCredentials: false})
+  }
+  fetchQueries(userID:string,responded:number,pageNum:number){
+    return this.http.get(apibaseUrl+API.submitquery+`?userID=${userID}&responded=${responded}&page=${pageNum}`)
   }
   AuthenticateSSO(code:string){
     let redir = SSO_REDIR

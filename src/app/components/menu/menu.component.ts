@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 import {saveAs} from 'file-saver';
 import { objectMap } from 'src/app/utils';
+import { mapServerRequirement, Requirement } from 'src/app/dashboard/dashboard-components/product/product.component';
 const recordHeader = 'StudentID,Balance,Comments,Last Updated'
 @Component({
   selector: 'app-menu',
@@ -10,12 +11,27 @@ const recordHeader = 'StudentID,Balance,Comments,Last Updated'
 })
 export class MenuComponent implements OnInit {
   file!:any
-  @ViewChild('filebox') filebox!:ElementRef;
+  dataSource:Requirement[]=[]
+  displayedColumns:string[]=[
+    'index',
+    'rollNumber',
+    'balance',
+    'comments',
+    'timePosted'
+  ]
+  clearBalance(id:number){
+    this.dataService.clearBalance(id).subscribe((v:any)=>{
+      console.log(v)
+      window.location.reload()
+    })
+  }
+   @ViewChild('filebox') filebox!:ElementRef;
   propagateClick(){
     this.filebox.nativeElement.click()
     //TODO: Pop up confirmation
 
   }
+
   updateFile(file:any){
     this.file = file;
   }
@@ -51,6 +67,13 @@ export class MenuComponent implements OnInit {
     if(!localStorage.getItem('isAdmin')){
       window.location.href = '/home'
     }
+    this.dataService.getAdminRecords().subscribe((data:any)=>{
+      console.log(data)
+      if(data.data.length>0){
+        this.dataSource=data.data.map((req:Requirement)=>mapServerRequirement(req))
+      }
+      console.log(this.dataSource)
+    })
   }
 
 }

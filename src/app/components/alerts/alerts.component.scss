@@ -7,6 +7,9 @@
     align-content: center;
     text-align: center;
 }
+.mat-button-toggle-selected{
+    background-color: red;
+}
 .rounded-pill{
     display: flex;
     flex-direction: row;
@@ -26,4 +29,7 @@
     align-items: center;
     align-content: center;
     text-align: center;
+}
+.actionsDiv>*{
+    margin: 5px;
 }

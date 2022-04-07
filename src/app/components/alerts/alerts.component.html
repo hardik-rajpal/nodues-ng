@@ -1,31 +1,48 @@
 <div>
-  <h2>Unresponded</h2>
-  <mat-expansion-panel *ngFor="let query of unrespondedQueries">
-    <mat-expansion-panel-header>
-      <div class="headerDiv">
-      <span class="badge badge-{{['danger','primary','success'][[false,null,true].indexOf(query.status)]}} rounded-pill">{{['Rejected','Processing','Accepted'][[false,null,true].indexOf(query.status)]}}</span>
-      <h3>{{query.requirement.rollNumber}}:</h3><p style="display: inline;">{{query.comment.slice(0,20)+(query.comment.length>20?'...':'')}}</p>
-      </div>
-    </mat-expansion-panel-header>
-    <h4>{{query.comment}}</h4>
-    <button mat-raised-button color="accent" (click)="openDoc(query)">View Docs</button>
-    <a href="{{query.document}}" style="display:none;" target="_blank" #docLink></a>
-    <textarea style="width: 100%;margin:10px" matInput [(ngModel)]="query.response"></textarea>
-    <button mat-raised-button color="primary" (click)="respondToQuery(query,true)">Accept</button>
-    <button mat-raised-button class="btn btn-danger" (click)="respondToQuery(query,false)">Reject</button>
+  <mat-button-toggle-group [(ngModel)]="queryMode" aria-label="Font Style" (change)="updateList()">
+    <mat-button-toggle [value]="respMode">Responded</mat-button-toggle>
+    <mat-button-toggle [value]="unrespMode">Unresponded</mat-button-toggle>
+  </mat-button-toggle-group>
+  <mat-select [(value)]="pageNum" (valueChange)="updateList()">
+      <mat-option *ngFor="let i of pagenums" [value]="i">{{i}}</mat-option>
+  </mat-select>
 
-  </mat-expansion-panel>
-  <h2>Responded</h2>
-  <mat-expansion-panel *ngFor="let query of respondedQueries">
-    <mat-expansion-panel-header>
-      <div class="headerDiv">
-      <span class="badge badge-{{['danger','primary','success'][[false,null,true].indexOf(query.status)]}} rounded-pill">{{['Rejected','Processing','Accepted'][[false,null,true].indexOf(query.status)]}}</span>
-      <h3>{{query.requirement.rollNumber}}:</h3><p style="display: inline;">{{query.comment.slice(0,20)+(query.comment.length>20?'...':'')}}</p>
-      </div>
-    </mat-expansion-panel-header>
-    <h4>{{query.comment}}</h4>
-    <button style="margin: 10px;" mat-raised-button color="primary" (click)="openDoc(query)">View Docs</button>
-    <a href="{{query.document}}" style="display:none;" target="_blank" #docLink></a>
-    <h4>You said: {{query.response}}</h4>
-  </mat-expansion-panel>
+  <div *ngIf="queryMode===unrespMode">
+    <h2>Unresponded</h2>
+    <mat-expansion-panel *ngFor="let query of unrespondedQueries">
+      <mat-expansion-panel-header>
+        <div class="headerDiv">
+        <span class="badge badge-{{['danger','primary','success'][[false,null,true].indexOf(query.status)]}} rounded-pill">{{['Rejected','Processing','Accepted'][[false,null,true].indexOf(query.status)]}}</span>
+        <h3>{{query.requirement.rollNumber}}:</h3><p style="display: inline;">{{query.comment.slice(0,20)+(query.comment.length>20?'...':'')}}</p>
+        </div>
+      </mat-expansion-panel-header>
+      <h4>{{query.comment}}</h4>
+      <button mat-raised-button color="accent" (click)="openDoc(query)">View Docs</button>
+      <a href="{{query.document}}" style="display:none;" target="_blank" #docLink></a>
+      <textarea style="width: 100%;margin:10px" matInput [(ngModel)]="query.response"></textarea>
+      <div class="actionsDiv">
+      <button mat-raised-button color="primary" (click)="clearBalance(query.requirement.id)">Clear Balance</button>
+      <button mat-raised-button color="primary" (click)="respondToQuery(query,true)">Accept</button>
+      <button mat-raised-button class="btn btn-danger" (click)="respondToQuery(query,false)">Reject</button>
+      
+    </div>
+    </mat-expansion-panel>
+    
+  </div>
+  <div *ngIf="respMode===queryMode">
+    <h2>Responded</h2>
+    <mat-expansion-panel *ngFor="let query of respondedQueries">
+      <mat-expansion-panel-header>
+        <div class="headerDiv">
+        <span class="badge badge-{{['danger','primary','success'][[false,null,true].indexOf(query.status)]}} rounded-pill">{{['Rejected','Processing','Accepted'][[false,null,true].indexOf(query.status)]}}</span>
+        <h3>{{query.requirement.rollNumber}}:</h3><p style="display: inline;">{{query.comment.slice(0,20)+(query.comment.length>20?'...':'')}}</p>
+        </div>
+      </mat-expansion-panel-header>
+      <h4>{{query.comment}}</h4>
+      <button style="margin: 10px;" mat-raised-button color="primary" (click)="openDoc(query)">View Docs</button>
+      <a href="{{query.document}}" style="display:none;" target="_blank" #docLink></a>
+      <h4>You said: {{query.response}}</h4>
+    </mat-expansion-panel>
+  </div>
+  
 </div>

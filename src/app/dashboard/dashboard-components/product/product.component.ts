@@ -11,7 +11,7 @@ export interface Requirement {
   balance:number;
   status:string;
   comments:string;
-  timePosted:string;
+  timePosted:Date;
 }
 const getStatus = (balance:number)=>{
   return balance>0?'Due':'Cleared'
@@ -69,7 +69,7 @@ export function mapServerRequirement(record: any) {
     comments:record.comment,
     department:record.department,
     status:getStatus(record.balance),
-    timePosted:record.timePosted
+    timePosted:new Date(record.time_posted)
   } as Requirement
 }
 

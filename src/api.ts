@@ -4,6 +4,7 @@ export const API = {
     Logout:'api/accounts/logout',
     SubmitFile:'api/records/',
     uploadProof:'api/upload/proof',
+    clearBalance:'api/records/clear',
     submitquery:'api/records/query',//POST
     query:'api/records/query{?userID}'//GET, //PUT=>responding to query.
 }
