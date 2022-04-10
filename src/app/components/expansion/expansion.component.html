@@ -3,21 +3,47 @@
 <!-- ============================================================== -->
 <mat-card>
   <mat-card-content>
-    <h4 class="mb-32">Inquries</h4>
-    <mat-card-title></mat-card-title>
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let query of queries">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{query.requirement.department}}</mat-panel-title>
-          <mat-panel-description>
-            <div style="display: flex;flex-direction: column;align-items: center;align-content: center;">
-            {{query.comment}} 
-            <span class="{{badgeMap(query.status)}} rounded-pill">{{captionMap(query.status)}}</span>
-            </div>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p>{{query.response===''?"No response yet. 😟":query.response}}</p>
-      </mat-expansion-panel>
+    <h4 class="mb-32">Queries</h4>
+    <mat-button-toggle-group [(ngModel)]="queryMode" aria-label="Font Style" (change)="updateList()">
+      <mat-button-toggle [value]="respMode">Responded</mat-button-toggle>
+      <mat-button-toggle [value]="unrespMode">Unresponded</mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-select [(value)]="pageNum" (valueChange)="updateList()">
+        <mat-option *ngFor="let i of pagenums" [value]="i">{{i}}</mat-option>
+    </mat-select>
+  
+    <div *ngIf="queryMode===unrespMode">
+      <h2>Unresponded</h2>
+      <mat-accordion>
+          <mat-expansion-panel *ngFor="let query of unrespondedQueries">
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{query.requirement.department}}</mat-panel-title>
+              <mat-panel-description>
+                <div style="display: flex;flex-direction: column;align-items: center;align-content: center;">
+                {{query.comment}} 
+                <span class="{{badgeMap(query.status)}} rounded-pill">{{captionMap(query.status)}}</span>
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>{{query.response}}</p>
+          </mat-expansion-panel>
     </mat-accordion>
+    <div *ngIf="queryMode===respMode">
+      <h2>Responded</h2>
+      <mat-accordion>
+          <mat-expansion-panel *ngFor="let query of respondedQueries">
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{query.requirement.department}}</mat-panel-title>
+              <mat-panel-description>
+                <div style="display: flex;flex-direction: column;align-items: center;align-content: center;">
+                {{query.comment}} 
+                <span class="{{badgeMap(query.status)}} rounded-pill">{{captionMap(query.status)}}</span>
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>{{"No response yet. 😟"}}</p>
+          </mat-expansion-panel>
+    </mat-accordion>
+  </div>
   </mat-card-content>
 </mat-card>

@@ -11,7 +11,6 @@ import { mapServerQuery } from '../expansion/expansion.component';
   styleUrls:['./alerts.component.scss']
 })
 export class AlertsComponent implements OnInit {
-  queries:Query[] = []
   unrespondedQueries:Query[] = []
   respondedQueries:Query[] = []
   pagenums = [1];
@@ -36,7 +35,7 @@ export class AlertsComponent implements OnInit {
     })
   }
   openDoc(query:Query){
-    this.docLinks[this.queries.indexOf(query)].nativeElement.click()
+
   }
   respondToQuery(query:Query,accepted:boolean){
     this.dataService.respondToQuery(query.response,query.id,accepted).subscribe(resp=>{

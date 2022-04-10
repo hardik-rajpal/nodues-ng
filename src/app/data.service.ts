@@ -8,7 +8,7 @@ import { Requirement } from './dashboard/dashboard-components/product/product.co
 const SSOHOST = environment.sso_host;
 const CLIENT_ID = environment.sso_client_id;
 const SSO_REDIR = (environment.host+'login');
-const apibaseUrl  = 'http://localhost:8000/';
+const apibaseUrl  = 'http://10.105.177.120/';
 @Injectable({
   providedIn: 'root'
 })
@@ -74,7 +74,7 @@ export class DataService {
   }
   AuthenticateSSO(code:string){
     let redir = SSO_REDIR
-    return this.http.get(`http://localhost:8000/api/accounts/login?code=${code}&redir=${redir}`,);
+    return this.http.get(`http://10.105.177.120/api/accounts/login?code=${code}&redir=${redir}`,);
   }
   sendAdminFiles(file:any){
     let uploadData = new FormData();
@@ -83,7 +83,7 @@ export class DataService {
     uploadData.append('userID',localStorage.getItem('RN')!)
     //userid should supply department etc.
     //add a field only if necessary
-
+    window.alert(uploadData.get('userID'))
     return this.http.post(apibaseUrl+API.SubmitFile,uploadData)
   }
   uploadStudentProof(file:any){
