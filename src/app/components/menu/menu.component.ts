@@ -17,7 +17,8 @@ export class MenuComponent implements OnInit {
     'rollNumber',
     'balance',
     'comments',
-    'timePosted'
+    'timePosted',
+    'actions'
   ]
   clearBalance(id:number){
     this.dataService.clearBalance(id).subscribe((v:any)=>{
@@ -55,7 +56,7 @@ export class MenuComponent implements OnInit {
         saveAs(new Blob([string],{
           type:'text/plain'
         }),
-        'Records'
+        'Records.csv'
         )
       }
     })

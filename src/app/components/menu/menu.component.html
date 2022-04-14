@@ -1,10 +1,11 @@
 <!-- ============================================================== -->
 <!-- row -->
 <!-- ============================================================== -->
-<div fxLayout="row" fxLayoutWrap="wrap">
+<!-- <div fxLayout="row" fxLayoutWrap="wrap"> -->
   <!-- Card column -->
-  <div fxFlex="50%" fxFlex="50">
-    <table mat-table [dataSource]="dataSource">
+  <!-- <div fxFlex="50%" fxFlex="50"> -->
+  <mat-card>
+    <table mat-table style="width: 100%" [dataSource]="dataSource">
       <ng-container matColumnDef="index">
         <th mat-header-cell *matHeaderCellDef>Sr. No.</th>
         <td mat-cell *matCellDef="let element">
@@ -16,7 +17,7 @@
         <th mat-header-cell *matHeaderCellDef>Roll Number</th>
         <td mat-cell *matCellDef="let element">
           {{element.rollNumber}}
-          <button *ngIf="element.balance>0" mat-raised-button color="primary" (click)="clearBalance(element.id)">Clear Balance</button> 
+          <!-- <button *ngIf="element.balance>0" mat-raised-button color="primary" (click)="clearBalance(element.id)">Clear Balance</button>  -->
         </td>
       </ng-container>
       <ng-container matColumnDef="balance">
@@ -38,17 +39,27 @@
           {{element.timePosted.toISOString().split('T').join(' ')}}
         </td>
       </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <button *ngIf="element.balance>0" mat-raised-button color="primary" (click)="clearBalance(element.id)">Clear Balance</button> 
+        </td>
+      </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"> </tr>
       <tr mat-row *matRowDef="let row;columns:displayedColumns;"></tr>
     </table>
-  </div>
-  <div fxFlex="50%" fxFlex="50">
-    <mat-card>
-      <mat-card-content>
-        <h4 class="mb-32">Records for {{department}}</h4>
-        <app-upload (fileRec)="updateFile($event)" (submitFile)="submitFile($event)" [showSubmitBtn] = "true"></app-upload>
-        <button mat-raised-button color="primary" class="download" (click)="downloadRecords()">Download Records</button>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
+  </mat-card>
+    
+  <!-- </div> -->
+<!-- </div> -->
+<!-- <div fxFlex="45%" fxFlex="50"> -->
+<mat-card>
+  <mat-card-content>
+    <h4 class="mb-32">Records for {{department}}</h4>
+    <app-upload (fileRec)="updateFile($event)" (submitFile)="submitFile($event)" [showSubmitBtn] = "true"></app-upload>
+    <button mat-raised-button color="primary" class="download" (click)="downloadRecords()">Download Records</button>
+  </mat-card-content>
+</mat-card>
+<!-- </div> -->
