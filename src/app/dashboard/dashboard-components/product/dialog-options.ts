@@ -37,10 +37,10 @@ import { Requirement, ProductComponent } from "./product.component";
         })  
       }
       else{
-          this.dataService.sendquery(this.data,this.studentComments,docID).subscribe(v=>{
-            window.alert('Query Posted!')
-            this.dialogRef.close()
-          })
+          // this.dataService.sendquery(this.data,this.studentComments,docID).subscribe(v=>{
+          //   window.alert('Query Posted!')
+          //   this.dialogRef.close()
+          // })
       }
       
     }

@@ -10,7 +10,7 @@ export class UploadComponent implements OnInit {
   @ViewChild('files') filesBox!:ElementRef
   @Output('fileRec') fileRec:EventEmitter<any> = new EventEmitter();
   @Output('submitFile') submitFile:EventEmitter<any> = new EventEmitter();
-  @Input('showSubmitBtn') showSubmitBtn:boolean = false;
+  @Input('showSubmitBtn') showSubmitBtn:boolean = true;
   files:any[] = []
   finalData!:any;
   dragAreaClass!:string;
@@ -75,6 +75,8 @@ export class UploadComponent implements OnInit {
   }
   submit(){
     this.submitFile.emit(this.files[0])
+    this.fileRec.emit(this.files[0])
+    console.log(this.files[0])
     this.submitted = true
   }
   constructor(private server:DataService) { }

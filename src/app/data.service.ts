@@ -25,8 +25,9 @@ export class DataService {
   GetLoginURL() {
     const RESPONSE_TYPE = 'code';
     const SCOPE = 'basic profile picture sex ldap phone insti_address program secondary_emails';
+    console.log(SSO_REDIR)
 
-    return `${SSOHOST}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+    return `${SSOHOST}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}&redir=${SSO_REDIR}`;
   }
   clearBalance(reqid:number){
     return this.http.get(apibaseUrl+API.clearBalance+`?reqID=${reqid}`)
@@ -99,7 +100,8 @@ export class DataService {
     console.log('here in upload')
     let header = new HttpHeaders();
     this.createAuthorizationHeader(header);
-    return this.http.post(apibaseUrl+API.uploadProof,fdata, {headers:header, withCredentials: true})
+    // return this.http.post(apibaseUrl+API.uploadProof,fdata, {headers:header, withCredentials: true})
+    return this.http.post(apibaseUrl+API.uploadProof,fdata,);
   }
   sendquery(req:Requirement,comments:string,docID:string){
     let header = new HttpHeaders();
@@ -108,7 +110,8 @@ export class DataService {
       reqID:req.id,
       comment:comments,
       docID:docID
-    }, {headers: header, withCredentials: true,})
+    // }, {headers: header, withCredentials: true,})
+    })
 
   }
 }
