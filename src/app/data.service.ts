@@ -19,8 +19,8 @@ export class DataService {
   public LS_USER = 'user_profile';
   constructor(private http:HttpClient, private cookieService:CookieService) {}
   createAuthorizationHeader(headers: HttpHeaders) {
-    // this.cookieService.get('csrft')
-    headers.append('X-CSRFToken',this.cookieService.get('csrft')); 
+    console.log(this.cookieService.get('csrftoken'))
+    headers.append('X-CSRFToken',this.cookieService.get('csrftoken')); 
   }
   GetLoginURL() {
     const RESPONSE_TYPE = 'code';
