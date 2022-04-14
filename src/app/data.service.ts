@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, Observer, Subscriber } from 'rxjs';
 import { API } from 'src/api';
 import { environment } from 'src/environments/environment';
@@ -16,7 +17,11 @@ export class DataService {
   currentUser: any;
   loggedIn!: boolean;
   public LS_USER = 'user_profile';
-  constructor(private http:HttpClient) {}
+  constructor(private http:HttpClient, private cookieService:CookieService) {}
+  createAuthorizationHeader(headers: HttpHeaders) {
+    // this.cookieService.get('csrft')
+    headers.append('X-CSRFToken',this.cookieService.get('csrft')); 
+  }
   GetLoginURL() {
     const RESPONSE_TYPE = 'code';
     const SCOPE = 'basic profile picture sex ldap phone insti_address program secondary_emails';
@@ -84,20 +89,26 @@ export class DataService {
     //userid should supply department etc.
     //add a field only if necessary
     window.alert(uploadData.get('userID'))
-    return this.http.post(apibaseUrl+API.SubmitFile,uploadData)
+    let header = new HttpHeaders();
+    this.createAuthorizationHeader(header);
+    return this.http.post(apibaseUrl+API.SubmitFile,uploadData, {headers:header, withCredentials:true})
   }
   uploadStudentProof(file:any){
     let fdata = new FormData()
     fdata.append('file',file)
     console.log('here in upload')
-    return this.http.post(apibaseUrl+API.uploadProof,fdata, {withCredentials: true})
+    let header = new HttpHeaders();
+    this.createAuthorizationHeader(header);
+    return this.http.post(apibaseUrl+API.uploadProof,fdata, {headers:header, withCredentials: true})
   }
   sendquery(req:Requirement,comments:string,docID:string){
+    let header = new HttpHeaders();
+    this.createAuthorizationHeader(header);
     return this.http.post(apibaseUrl+API.submitquery, {
       reqID:req.id,
       comment:comments,
       docID:docID
-    }, {withCredentials: true})
+    }, {headers: header, withCredentials: true,})
 
   }
 }
