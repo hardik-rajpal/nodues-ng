@@ -3,12 +3,12 @@
     <mat-button-toggle [value]="respMode">Responded</mat-button-toggle>
     <mat-button-toggle [value]="unrespMode">Unresponded</mat-button-toggle>
   </mat-button-toggle-group>
-  <mat-select [(value)]="pageNum" (valueChange)="updateList()">
+  <mat-select style="margin: 30px;" [(value)]="pageNum" (valueChange)="updateList()">
       <mat-option *ngFor="let i of pagenums" [value]="i">{{i}}</mat-option>
   </mat-select>
 
   <div *ngIf="queryMode===unrespMode">
-    <h2>Unresponded</h2>
+    <!-- <h2>Unresponded</h2> -->
     <mat-expansion-panel *ngFor="let query of unrespondedQueries">
       <mat-expansion-panel-header>
         <div class="headerDiv">
@@ -27,10 +27,13 @@
       
     </div>
     </mat-expansion-panel>
+    <div *ngIf="unrespondedQueries.length === 0">
+      Nothing to show here.
+    </div>
     
   </div>
   <div *ngIf="respMode===queryMode">
-    <h2>Responded</h2>
+    <!-- <h2>Responded</h2> -->
     <mat-expansion-panel *ngFor="let query of respondedQueries">
       <mat-expansion-panel-header>
         <div class="headerDiv">
@@ -43,6 +46,9 @@
       <a href="{{query.document}}" style="display:none;" target="_blank" #docLink></a>
       <h4>You said: {{query.response}}</h4>
     </mat-expansion-panel>
+    <div *ngIf="respondedQueries.length === 0">
+      Nothing to show here.
+    </div>
   </div>
   
 </div>

@@ -32,14 +32,16 @@ export class AlertsComponent implements OnInit {
   clearBalance(id:number){
     this.dataService.clearBalance(id).subscribe((v:any)=>{
       console.log(v)
+      window.location.reload();
     })
   }
   openDoc(query:Query){
-
+    window.open('http://10.105.177.120/api/records/get_file/'+query.document);
   }
   respondToQuery(query:Query,accepted:boolean){
     this.dataService.respondToQuery(query.response,query.id,accepted).subscribe(resp=>{
       console.log(resp)
+      window.location.reload();
     })
   }
   ngOnInit(): void {
