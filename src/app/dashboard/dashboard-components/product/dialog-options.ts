@@ -22,6 +22,7 @@ import { Requirement, ProductComponent } from "./product.component";
     //   })
     }
     attachFile(file:any){
+      console.log(file)
       this.queryProof = file;
     }
     submitquery(){

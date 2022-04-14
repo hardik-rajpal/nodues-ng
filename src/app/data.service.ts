@@ -89,7 +89,8 @@ export class DataService {
   uploadStudentProof(file:any){
     let fdata = new FormData()
     fdata.append('file',file)
-    return this.http.post(API.uploadProof,fdata, {withCredentials: true})
+    console.log('here in upload')
+    return this.http.post(apibaseUrl+API.uploadProof,fdata, {withCredentials: true})
   }
   sendquery(req:Requirement,comments:string,docID:string){
     return this.http.post(apibaseUrl+API.submitquery, {
