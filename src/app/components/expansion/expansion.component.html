@@ -8,12 +8,14 @@
       <mat-button-toggle [value]="respMode">Responded</mat-button-toggle>
       <mat-button-toggle [value]="unrespMode">Unresponded</mat-button-toggle>
     </mat-button-toggle-group>
-    <mat-select [(value)]="pageNum" (valueChange)="updateList()">
+    <div style="padding: 30px;">
+      <mat-select [(value)]="pageNum" (valueChange)="updateList()">
         <mat-option *ngFor="let i of pagenums" [value]="i">{{i}}</mat-option>
-    </mat-select>
+      </mat-select>
+    </div>
   
     <div *ngIf="queryMode===unrespMode">
-      <h2>Unresponded</h2>
+      <!-- <h2>Unresponded</h2> -->
       <mat-accordion>
           <mat-expansion-panel *ngFor="let query of unrespondedQueries">
             <mat-expansion-panel-header>
@@ -27,9 +29,13 @@
             </mat-expansion-panel-header>
             <p>{{query.response}}</p>
           </mat-expansion-panel>
+          <div *ngIf="unrespondedQueries.length === 0">
+            Nothing to show here.
+          </div>
     </mat-accordion>
-    <div *ngIf="queryMode===respMode">
-      <h2>Responded</h2>
+  </div>
+    <div *ngIf="queryMode!==unrespMode">
+      <!-- <h2>Responded</h2> -->
       <mat-accordion>
           <mat-expansion-panel *ngFor="let query of respondedQueries">
             <mat-expansion-panel-header>
@@ -43,8 +49,10 @@
             </mat-expansion-panel-header>
             <p>{{"No response yet. 😟"}}</p>
           </mat-expansion-panel>
+          <div *ngIf="respondedQueries.length === 0">
+            Nothing to show here.
+          </div>
     </mat-accordion>
-    </div>
     </div>
   </mat-card-content>
 </mat-card>

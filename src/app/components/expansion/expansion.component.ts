@@ -38,7 +38,7 @@ export class ExpansionComponent implements OnInit{
     let uid= localStorage.getItem('RN')!
     this.dataService.fetchQueries(uid,this.queryMode,this.pageNum).subscribe((resp:any)=>{
       this.queryMode===this.respMode?(this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))):this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))
-      console.log(resp)
+      console.log(this.respondedQueries)
     })
   }
   ngOnInit() {
@@ -50,8 +50,8 @@ export class ExpansionComponent implements OnInit{
         this.pagenums.push(resp.count+1)
       }
       this.pagenums=this.pagenums.reverse()
-      console.log(resp)
-      console.log(this.pagenums)
+      // console.log(resp)
+      // console.log(this.pagenums)
     })
   }
   
