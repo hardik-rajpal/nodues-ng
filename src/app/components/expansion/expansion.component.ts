@@ -33,16 +33,27 @@ export class ExpansionComponent implements OnInit{
   }
   panelOpenState = false;
   step = 0;
+  updatePageNums(count:number){
+    this.pagenums=[];
+    if(this.pageNum>count){this.pageNum = 1;}
+    while((()=>{count-=1;return count})()>=0){
+          this.pagenums.push(count+1)
+        }
+        this.pagenums=this.pagenums.reverse()
+      
+  }
   updateList(){
     console.log(this.pageNum)
     let uid= localStorage.getItem('RN')!
     console.log(this.queryMode)
     this.dataService.fetchQueries(uid,this.queryMode,this.pageNum).subscribe((resp:any)=>{
-      this.queryMode===this.respMode
-      ?
-      (this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q)))
-      :
+      if(this.queryMode===this.respMode){
+        (this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q)))
+      }
+      else{
       (this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q)))
+      }
+      this.updatePageNums(resp.count);
       console.log(resp)
     })
   }
@@ -55,11 +66,7 @@ export class ExpansionComponent implements OnInit{
       (this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q)))
       :
       this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))
-      this.pagenums=[]
-      while((()=>{resp.count-=1;return resp.count})()>=0){
-        this.pagenums.push(resp.count+1)
-      }
-      this.pagenums=this.pagenums.reverse()
+      this.updatePageNums(resp.count)
       console.log(this.queryMode,this.respMode,this.unrespMode)
       console.log(this.respondedQueries,this.unrespondedQueries)
       // console.log(this.pagenums)
@@ -71,7 +78,7 @@ export function mapServerQuery(query: any) {
   return {
     id:query.id,
     comment:query.comment,
-    document:query.document,
+    document:query.document_id,
     postTime:query.time_posted,
     status:query.status_check,
     response:query.response,

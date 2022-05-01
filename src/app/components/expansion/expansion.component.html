@@ -9,11 +9,12 @@
         <mat-button-toggle [value]="respMode">Responded</mat-button-toggle>
         <mat-button-toggle [value]="unrespMode">Unresponded</mat-button-toggle>
       </mat-button-toggle-group>
-      <div style="padding: 30px;">
-        <mat-select [(value)]="pageNum" (valueChange)="updateList()">
-          <mat-option *ngFor="let i of pagenums" [value]="i">{{i}}</mat-option>
+      <div style="display: flex;flex-direction: row;justify-content: flex-start;">
+        <h3 style="margin: 30px;">Page Number: </h3>
+        <mat-select style="margin: 30px; width: 200px;" [(value)]="pageNum" (valueChange)="updateList()">
+            <mat-option *ngFor="let i of pagenums" [value]="i">{{i}}</mat-option>
         </mat-select>
-      </div>  
+      </div>
     </div>
     <div *ngIf="queryMode===respMode">
       <!-- <h2>Unresponded</h2> -->

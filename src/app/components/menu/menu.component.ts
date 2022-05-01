@@ -2,7 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 import {saveAs} from 'file-saver';
 import { objectMap } from 'src/app/utils';
-import { mapServerRequirement, Requirement } from 'src/app/dashboard/dashboard-components/product/product.component';
+import { mapServerRequirement, Requirement,dateToReadable } from 'src/app/dashboard/dashboard-components/product/product.component';
+import { Event } from '@angular/router';
 const recordHeader = 'StudentID,Balance,Comments,Last Updated'
 @Component({
   selector: 'app-menu',
@@ -12,6 +13,7 @@ const recordHeader = 'StudentID,Balance,Comments,Last Updated'
 export class MenuComponent implements OnInit {
   file!:any
   dataSource:Requirement[]=[]
+  queriedDataSource:Requirement[]=[]
   displayedColumns:string[]=[
     'index',
     'rollNumber',
@@ -20,6 +22,7 @@ export class MenuComponent implements OnInit {
     'timePosted',
     'actions'
   ]
+  dateToReadable:Function  = dateToReadable;
   clearBalance(id:number){
     this.dataService.clearBalance(id).subscribe((v:any)=>{
       console.log(v)
@@ -32,7 +35,19 @@ export class MenuComponent implements OnInit {
     //TODO: Pop up confirmation
 
   }
-
+  updateTableData(ev:any){
+    let qstr = ev.target.value;
+    qstr =qstr.toLowerCase();
+    this.queriedDataSource = this.dataSource.filter((req:Requirement,i:number,[])=>{
+      return (
+        req.rollNumber.toLowerCase().includes(qstr)
+        ||
+        req.comments.toLowerCase().includes(qstr)
+        ||
+        req.department.toLowerCase().includes(qstr))
+    })
+    return;
+  }
   updateFile(file:any){
     this.file = file;
   }
@@ -72,6 +87,7 @@ export class MenuComponent implements OnInit {
       console.log(data)
       if(data.data.length>0){
         this.dataSource=data.data.map((req:Requirement)=>mapServerRequirement(req))
+        this.queriedDataSource = this.dataSource;
       }
       console.log(this.dataSource)
     })

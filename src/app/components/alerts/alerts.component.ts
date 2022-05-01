@@ -14,31 +14,49 @@ export class AlertsComponent implements OnInit {
   unrespondedQueries:Query[] = []
   respondedQueries:Query[] = []
   pagenums = [1];
-  respMode=0
-  unrespMode=1
-  queryMode=0
+  respMode=1
+  unrespMode=0
+  queryMode=this.unrespMode;
   pageNum=1
   @ViewChildren('docLink') docLinks!:ElementRef[]
   productClass=ProductComponent
   constructor(private dataService:DataService) { }
+  updatePageNums(count:number){
+    this.pagenums=[];
+    if(this.pageNum>count){this.pageNum = 1;}
+
+    while((()=>{count-=1;return count})()>=0){
+          this.pagenums.push(count+1)
+        }
+        this.pagenums=this.pagenums.reverse()
+  }
   updateList(){
     console.log(this.pageNum)
     let uid= localStorage.getItem('RN')!
     this.dataService.fetchQueries(uid,this.queryMode,this.pageNum).subscribe((resp:any)=>{
-      this.queryMode===this.respMode?(this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))):this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))
+      if(this.queryMode===this.respMode){
+        this.respondedQueries= resp.data.map((q:any)=>mapServerQuery(q))
+      }
+      else{
+        (this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q)))
+      }      
+      this.updatePageNums(resp.count);
       console.log(resp)
     })
   }
-  clearBalance(id:number){
-    this.dataService.clearBalance(id).subscribe((v:any)=>{
-      console.log(v)
-      window.location.reload();
+  clearBalance(query:Query){
+    this.dataService.clearBalance(query.requirement.id).subscribe((v:any)=>{
+      this.dataService.respondToQuery('Balance Cleared. 🙂',query.id,true).subscribe((resp:any)=>{      
+        window.location.reload();
+      })
     })
+
   }
   openDoc(query:Query){
     window.open('http://10.105.177.120/api/records/get_file/'+query.document);
   }
   respondToQuery(query:Query,accepted:boolean){
+    if(query.response.length===0){window.alert("Please type in a response for the student.");return;}
     this.dataService.respondToQuery(query.response,query.id,accepted).subscribe(resp=>{
       console.log(resp)
       window.location.reload();
@@ -48,23 +66,9 @@ export class AlertsComponent implements OnInit {
     let uid = localStorage.getItem('RN')!
     this.dataService.fetchQueries(uid,this.queryMode,this.pageNum).subscribe((resp:any)=>{
       this.queryMode===this.respMode?(this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))):this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))
-      this.pagenums=[]
-      while((()=>{resp.count-=1;return resp.count})()>=0){
-        this.pagenums.push(resp.count+1)
-      }
-      this.pagenums=this.pagenums.reverse()
+      this.updatePageNums(resp.count)
       console.log(resp)
       console.log(this.pagenums)
     })
-    // this.dataService.fetchAllqueries(localStorage.getItem('RN')!).subscribe((resp:any)=>{
-    //   console.log(resp)
-    //   if(resp.data){
-    //     this.queries = resp.data.map((query:any)=>{
-    //       return mapServerQuery(query)
-    //     })
-    //     this.respondedQueries = this.queries.filter(q=>q.status!==null)
-    //     this.unrespondedQueries=this.queries.filter(q=>q.status===null)
-    //   }
-    // })
   }
 }

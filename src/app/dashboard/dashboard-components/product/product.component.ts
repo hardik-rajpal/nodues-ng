@@ -72,4 +72,6 @@ export function mapServerRequirement(record: any) {
     timePosted:new Date(record.time_posted)
   } as Requirement
 }
-
+export function dateToReadable(d:Date){
+  return ((a)=>[a[0],a[1].split(':').slice(0,2).join(':')].join(' '))(d.toISOString().split('T'))
+}

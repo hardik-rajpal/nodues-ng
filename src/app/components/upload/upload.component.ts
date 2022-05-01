@@ -22,6 +22,9 @@ export class UploadComponent implements OnInit {
     let files:FileList = event.target.files;
     this.saveFiles(files);
   }
+  shorten(name:string){
+    return (name.length<10)?name:name.slice(0,10)+'...'
+  }
   @HostListener("dragover", ["$event"]) onDragOver(event: any) {
     this.dragAreaClass = "droparea";
     event.preventDefault();
@@ -67,6 +70,7 @@ export class UploadComponent implements OnInit {
   }
   updateFile(ev:any){
     for(let file of ev.target.files){
+      this.fileRec.emit(this.files[0])
       if(!this.files.includes(file)){
         this.files.push(file)
         this.fileNames.push(file.name);

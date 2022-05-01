@@ -32,7 +32,8 @@ import { Requirement, ProductComponent } from "./product.component";
         this.dataService.uploadStudentProof(this.queryProof).subscribe((resp:any)=>{
           docID = resp.docID
           this.dataService.sendquery(this.data,this.studentComments,docID).subscribe(v=>{
-            console.log(v)
+            window.alert('Query Posted!');
+            this.dialogRef.close();
           })
         })  
       }
