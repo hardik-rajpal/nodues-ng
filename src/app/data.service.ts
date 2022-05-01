@@ -76,6 +76,7 @@ export class DataService {
     return this.http.get(apibaseUrl+API.submitquery+'?userID='+userID,{withCredentials: false})
   }
   fetchQueries(userID:string,responded:number,pageNum:number){
+    console.log(userID,responded,pageNum)
     return this.http.get(apibaseUrl+API.submitquery+`?userID=${userID}&responded=${responded}&page=${pageNum}`)
   }
   AuthenticateSSO(code:string){

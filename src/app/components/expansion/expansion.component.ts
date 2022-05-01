@@ -22,9 +22,9 @@ export class ExpansionComponent implements OnInit{
   queries:Query[]=[]
   pagenums=[1]
   pageNum=1
-  queryMode=0;
-  respMode=1;
-  unrespMode=0;
+  respMode:number=1;
+  unrespMode:number=0;
+  queryMode:number=this.unrespMode;
   badgeMap:Function = (accepted:number)=>{
     return ["badge badge-danger","badge badge-primary","badge badge-success"][accepted]
   }
@@ -36,21 +36,32 @@ export class ExpansionComponent implements OnInit{
   updateList(){
     console.log(this.pageNum)
     let uid= localStorage.getItem('RN')!
+    console.log(this.queryMode)
     this.dataService.fetchQueries(uid,this.queryMode,this.pageNum).subscribe((resp:any)=>{
-      this.queryMode===this.respMode?(this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))):this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))
-      console.log(this.respondedQueries)
+      this.queryMode===this.respMode
+      ?
+      (this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q)))
+      :
+      (this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q)))
+      console.log(resp)
     })
   }
   ngOnInit() {
     let uid = localStorage.getItem('RN')!
     this.dataService.fetchQueries(uid,this.queryMode,this.pageNum).subscribe((resp:any)=>{
-      this.queryMode===this.respMode?(this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))):this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))
+      console.log(resp)
+      this.queryMode===this.respMode
+      ?
+      (this.respondedQueries  = resp.data.map((q:any)=>mapServerQuery(q)))
+      :
+      this.unrespondedQueries  = resp.data.map((q:any)=>mapServerQuery(q))
       this.pagenums=[]
       while((()=>{resp.count-=1;return resp.count})()>=0){
         this.pagenums.push(resp.count+1)
       }
       this.pagenums=this.pagenums.reverse()
-      // console.log(resp)
+      console.log(this.queryMode,this.respMode,this.unrespMode)
+      console.log(this.respondedQueries,this.unrespondedQueries)
       // console.log(this.pagenums)
     })
   }

@@ -4,20 +4,21 @@
 <mat-card>
   <mat-card-content>
     <h4 class="mb-32">Queries</h4>
-    <mat-button-toggle-group [(ngModel)]="queryMode" aria-label="Font Style" (change)="updateList()">
-      <mat-button-toggle [value]="respMode">Responded</mat-button-toggle>
-      <mat-button-toggle [value]="unrespMode">Unresponded</mat-button-toggle>
-    </mat-button-toggle-group>
-    <div style="padding: 30px;">
-      <mat-select [(value)]="pageNum" (valueChange)="updateList()">
-        <mat-option *ngFor="let i of pagenums" [value]="i">{{i}}</mat-option>
-      </mat-select>
+    <div style="flex-direction:row">
+      <mat-button-toggle-group [(ngModel)]="queryMode" aria-label="Font Style" (change)="updateList()">
+        <mat-button-toggle [value]="respMode">Responded</mat-button-toggle>
+        <mat-button-toggle [value]="unrespMode">Unresponded</mat-button-toggle>
+      </mat-button-toggle-group>
+      <div style="padding: 30px;">
+        <mat-select [(value)]="pageNum" (valueChange)="updateList()">
+          <mat-option *ngFor="let i of pagenums" [value]="i">{{i}}</mat-option>
+        </mat-select>
+      </div>  
     </div>
-  
-    <div *ngIf="queryMode===unrespMode">
+    <div *ngIf="queryMode===respMode">
       <!-- <h2>Unresponded</h2> -->
       <mat-accordion>
-          <mat-expansion-panel *ngFor="let query of unrespondedQueries">
+          <mat-expansion-panel *ngFor="let query of respondedQueries">
             <mat-expansion-panel-header>
               <mat-panel-title>{{query.requirement.department}}</mat-panel-title>
               <mat-panel-description>
@@ -34,10 +35,10 @@
           </div>
     </mat-accordion>
   </div>
-    <div *ngIf="queryMode!==unrespMode">
+    <div *ngIf="queryMode===unrespMode">
       <!-- <h2>Responded</h2> -->
       <mat-accordion>
-          <mat-expansion-panel *ngFor="let query of respondedQueries">
+          <mat-expansion-panel *ngFor="let query of unrespondedQueries">
             <mat-expansion-panel-header>
               <mat-panel-title>{{query.requirement.department}}</mat-panel-title>
               <mat-panel-description>
