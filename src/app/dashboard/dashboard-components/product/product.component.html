@@ -35,13 +35,13 @@
               <button mat-raised-button class="me-8 mb-8" color="primary" (click)="inquireDialog(element)">
                 Inquire
               </button>
-              <button mat-raised-button class="me-8 mb-8" color="accent" (click)="inquireDialog(element)">
+              <button mat-raised-button class="me-8 mb-8" color="accent" (click)="comingSoon()">
                 Pay
               </button>
               
             </ng-container>
             <ng-container *ngIf="element.status=='Cleared'">
-              <button mat-raised-button class="me-8 mb-8" color="primary" (click)="inquireDialog(element)">
+              <button mat-raised-button class="me-8 mb-8" color="primary" (click)="comingSoon()">
                 Save
               </button>
             </ng-container>

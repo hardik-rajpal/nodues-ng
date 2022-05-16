@@ -55,9 +55,11 @@ export class MenuComponent implements OnInit {
     this.dataService.sendAdminFiles(file).subscribe((v:any)=>{
       if(v.status==200){
         window.alert('Records Updated! 🧾')
+        window.location.reload()
       }
       else{
         window.alert('Failed to update records. 😶')
+        window.location.reload()
       }
     })
   }
@@ -66,7 +68,7 @@ export class MenuComponent implements OnInit {
       if(data.data.length>0){
         let string = [recordHeader,
           ...data.data.map((record:any,j:number,[])=>{
-          return [record.roll_number,record.balance,record.comment,record.time_posted]
+          return [record.roll_number,record.balance,record.comment,this.dateToReadable(record.time_posted)]
         })].join('\n')
         saveAs(new Blob([string],{
           type:'text/plain'

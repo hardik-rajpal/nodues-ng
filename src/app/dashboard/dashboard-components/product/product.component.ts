@@ -59,8 +59,12 @@ export class ProductComponent implements OnInit {
     })
     // this.inquireDialog(this.dataSource[0])
   }
+  comingSoon(){
+    window.alert("This feature is yet to be implemented")
+  }
 
 }
+
 export function mapServerRequirement(record: any) {
   return {
     id:record.id,

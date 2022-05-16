@@ -90,7 +90,7 @@ export class DataService {
     uploadData.append('userID',localStorage.getItem('RN')!)
     //userid should supply department etc.
     //add a field only if necessary
-    window.alert(uploadData.get('userID'))
+    // window.alert(uploadData.get('userID'))
     let header = new HttpHeaders();
     this.createAuthorizationHeader(header);
     return this.http.post(apibaseUrl+API.SubmitFile,uploadData, {headers:header, withCredentials:true})

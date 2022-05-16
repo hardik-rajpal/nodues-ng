@@ -70,12 +70,13 @@ export class UploadComponent implements OnInit {
   }
   updateFile(ev:any){
     for(let file of ev.target.files){
-      this.fileRec.emit(this.files[0])
       if(!this.files.includes(file)){
         this.files.push(file)
         this.fileNames.push(file.name);
       }
     }
+    this.fileRec.emit(this.files[0])
+
   }
   submit(){
     this.submitFile.emit(this.files[0])

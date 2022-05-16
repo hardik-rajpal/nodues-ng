@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
       const auth_code = window.location.href.split('?code=')[1];
       // window.alert('code:'+auth_code)
       this.dataService.AuthenticateSSO(auth_code).subscribe((v:any)=>{
-        window.alert(JSON.stringify(v))
+        // window.alert(JSON.stringify(v))
         localStorage.setItem('RN',v.user)
 
         /*
